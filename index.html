@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching with AI — Loyola University Maryland</title>
+<meta name="description" content="A comprehensive faculty guide for integrating AI tools into higher education courses. 11 modules covering AI pedagogy, assignment design, custom AI tools, ethics, and more. Created by Dr. Jason Cherubini, Sellinger School of Business, Loyola University Maryland.">
+<meta name="author" content="Dr. Jason Cherubini, Loyola University Maryland">
+<meta name="keywords" content="AI pedagogy, higher education, teaching with AI, ChatGPT, Claude, faculty development, Sellinger School of Business, Loyola University Maryland">
+<meta property="og:title" content="Teaching with AI — A Faculty Guide to AI-Enhanced Pedagogy">
+<meta property="og:description" content="11-module faculty course covering AI integration in higher education. Sellinger School of Business, Loyola University Maryland.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teaching with AI — Loyola University Maryland">
+<meta name="twitter:description" content="11-module faculty course covering AI integration in higher education.">
+<style>
+  :root {
+    --loyola-green: #1A5632;
+    --green-light: #E8F5E9;
+    --green-mid: #2d7a4a;
+    --accent: #8D6E63;
+    --warn: #E65100;
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #2d3436;
+    --text-light: #636e72;
+    --border: #e0e0e0;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  /* ── Top nav ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--loyola-green);
+    color: white; padding: 0 24px;
+    display: flex; align-items: center; gap: 16px;
+    height: 56px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  }
+  .topbar-logo {
+    font-size: .75rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; opacity: .8;
+  }
+  .topbar h1 { font-size: 1.05rem; flex: 1; font-weight: 600; }
+  .topbar select {
+    padding: 6px 12px; border-radius: 6px; border: none;
+    font-size: .85rem; background: rgba(255,255,255,.15);
+    color: white; cursor: pointer;
+  }
+  .topbar select option { color: #333; background: white; }
+
+  /* ── Layout ── */
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 270px; background: var(--card-bg);
+    border-right: 1px solid var(--border);
+    padding: 16px 0; overflow-y: auto;
+    position: sticky; top: 56px; height: calc(100vh - 56px);
+  }
+  .sidebar a {
+    display: block; padding: 9px 20px; color: var(--text-light);
+    text-decoration: none; font-size: .84rem;
+    border-left: 3px solid transparent; transition: all .15s;
+  }
+  .sidebar a:hover, .sidebar a.active {
+    background: var(--green-light); color: var(--loyola-green);
+    border-left-color: var(--loyola-green); font-weight: 600;
+  }
+  .sidebar .mod-header {
+    padding: 14px 20px 4px; font-weight: 700;
+    color: var(--loyola-green); font-size: .8rem;
+    text-transform: uppercase; letter-spacing: .5px; margin-top: 8px;
+  }
+
+  .main { flex: 1; padding: 32px 48px; max-width: 960px; }
+
+  /* ── Module sections ── */
+  .module-section { display: none; }
+  .module-section.active { display: block; }
+
+  /* ── Course hero (overview page) ── */
+  .course-hero {
+    background: linear-gradient(135deg, var(--loyola-green) 0%, #0d3f22 100%);
+    color: white; padding: 48px 40px; border-radius: var(--radius);
+    margin-bottom: 32px; text-align: center;
+  }
+  .hero-badge {
+    font-size: .7rem; font-weight: 700; letter-spacing: 2px;
+    opacity: .7; margin-bottom: 12px;
+  }
+  .course-hero h1 { font-size: 2.2rem; margin-bottom: 8px; font-weight: 700; }
+  .hero-subtitle { font-size: 1.15rem; opacity: .85; margin-bottom: 16px; }
+  .hero-meta { display: flex; gap: 8px; justify-content: center; font-size: .9rem; opacity: .7; margin-bottom: 28px; }
+  .hero-stats { display: flex; gap: 40px; justify-content: center; }
+  .stat { text-align: center; }
+  .stat-num { display: block; font-size: 1.8rem; font-weight: 700; }
+  .stat-label { font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; opacity: .7; }
+
+  .overview-text {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 32px; margin-bottom: 32px;
+    font-size: 1.02rem;
+  }
+  .overview-text p { margin-bottom: 12px; }
+  .overview-text p:last-child { margin-bottom: 0; }
+
+  .section-heading {
+    color: var(--loyola-green); font-size: 1.3rem;
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--green-light);
+  }
+
+  /* ── Module grid (overview) ── */
+  .module-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px; margin-bottom: 32px;
+  }
+  .mod-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    cursor: pointer; transition: all .2s;
+  }
+  .mod-card:hover {
+    border-color: var(--loyola-green);
+    box-shadow: 0 4px 16px rgba(26,86,50,.12);
+    transform: translateY(-2px);
+  }
+  .mod-card-num {
+    font-size: .75rem; font-weight: 700; color: var(--loyola-green);
+    text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px;
+  }
+  .mod-card-title { font-weight: 600; font-size: .95rem; margin-bottom: 8px; color: var(--text); }
+  .mod-card-count { font-size: .8rem; color: var(--text-light); }
+
+  /* ── Module header ── */
+  .module-header {
+    background: linear-gradient(135deg, var(--loyola-green), var(--green-mid));
+    color: white; padding: 32px 36px; border-radius: var(--radius);
+    margin-bottom: 28px;
+  }
+  .module-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .module-subtitle { opacity: .85; font-size: .95rem; }
+
+  /* ── Section block (summary content) ── */
+  .section-block {
+    background: var(--green-light); border-left: 4px solid var(--loyola-green);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 20px 24px; margin-bottom: 24px;
+  }
+  .section-block h2 { display: none; } /* Hide duplicate section title */
+
+  /* ── Content cards ── */
+  .content-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 16px;
+    overflow: hidden; transition: box-shadow .2s;
+  }
+  .content-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+  .content-card-header {
+    padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+    cursor: pointer; user-select: none; border-left: 4px solid #ccc;
+  }
+  .content-card-header:hover { background: #fafafa; }
+  .card-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .card-title { font-weight: 600; flex: 1; font-size: .95rem; }
+  .card-type {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .5px; flex-shrink: 0;
+  }
+  .chevron { transition: transform .2s; font-size: 1.2rem; color: #bbb; }
+  .content-card.open .chevron { transform: rotate(90deg); }
+  .content-card-body {
+    display: none; padding: 4px 24px 24px; border-top: 1px solid var(--border);
+  }
+  .content-card.open .content-card-body { display: block; }
+
+  /* ── Content styling ── */
+  .content-card-body h2, .section-block h3 { color: var(--loyola-green); margin: 20px 0 10px; font-size: 1.25rem; }
+  .content-card-body h3 { color: var(--text); margin: 16px 0 8px; font-size: 1.1rem; }
+  .content-card-body h4 { color: var(--loyola-green); margin: 12px 0 6px; font-size: 1rem; }
+  .content-card-body p, .section-block p { margin: 10px 0; }
+  .content-card-body ul, .content-card-body ol { margin: 10px 0 10px 24px; }
+  .content-card-body li { margin: 4px 0; }
+  .content-card-body table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .92rem; }
+  .content-card-body th { background: var(--loyola-green); color: white; padding: 10px 12px; text-align: left; }
+  .content-card-body td { padding: 10px 12px; border: 1px solid #ddd; }
+  .content-card-body tr:nth-child(even) { background: #f5f9f6; }
+
+  /* Evidence / tip / warn / note boxes */
+  .content-card-body div[style*="border-left:4px solid #8D6E63"],
+  .section-block div[style*="border-left:4px solid #8D6E63"] {
+    border-left: 4px solid var(--accent) !important;
+    background: #F5F0E8; padding: 14px 18px; margin: 14px 0;
+    border-radius: 6px; font-size: .93rem;
+  }
+  .content-card-body div[style*="border-left:4px solid #2E7D32"],
+  .section-block div[style*="border-left:4px solid #2E7D32"] {
+    border-left: 4px solid #2E7D32 !important;
+    background: #E8F5E9; padding: 14px 18px; margin: 14px 0;
+    border-radius: 6px; font-size: .93rem;
+  }
+  .content-card-body div[style*="border-left:4px solid #E65100"],
+  .section-block div[style*="border-left:4px solid #E65100"] {
+    border-left: 4px solid #E65100 !important;
+    background: #FFF3E0; padding: 14px 18px; margin: 14px 0;
+    border-radius: 6px; font-size: .93rem;
+  }
+  .content-card-body div[style*="border-left:4px solid #1A5632"],
+  .section-block div[style*="border-left:4px solid #1A5632"] {
+    border-left: 4px solid #1A5632 !important;
+    background: #F0F7F2; padding: 14px 18px; margin: 14px 0;
+    border-radius: 6px; font-size: .93rem;
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: var(--loyola-green); color: white; text-align: center;
+    padding: 24px; font-size: .85rem; opacity: .9;
+    margin-top: 40px;
+  }
+  .site-footer a { color: #a5d6a7; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { padding: 20px 16px; }
+    .course-hero { padding: 32px 20px; }
+    .course-hero h1 { font-size: 1.6rem; }
+    .hero-stats { gap: 20px; }
+    .module-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Print ── */
+  @media print {
+    .topbar, .sidebar { display: none; }
+    .layout { display: block; }
+    .module-section { display: block !important; page-break-before: always; }
+    .content-card-body { display: block !important; }
+  }
+
+  /* ── Newsletter signup ── */
+  .newsletter-box {
+    background: var(--green-light);
+    border: 1px solid #c8e6c9;
+    border-left: 4px solid var(--loyola-green);
+    border-radius: var(--radius);
+    padding: 26px 32px;
+    margin: 32px 0;
+    text-align: center;
+  }
+  .newsletter-box h3 {
+    color: var(--loyola-green);
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .newsletter-box p {
+    color: var(--text-light);
+    font-size: .92rem;
+    margin-bottom: 16px;
+  }
+  .newsletter-box form {
+    display: flex; gap: 8px;
+    max-width: 460px; margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  .newsletter-box input {
+    flex: 1; min-width: 220px;
+    padding: 11px 14px;
+    border: 1px solid #c8e6c9;
+    border-radius: 6px;
+    font-size: .95rem;
+    font-family: inherit;
+  }
+  .newsletter-box input:focus { outline: none; border-color: var(--loyola-green); }
+  .newsletter-box button {
+    background: var(--loyola-green);
+    color: white; border: none;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .newsletter-box button:hover { background: var(--green-mid); }
+  .newsletter-box .nl-note {
+    font-size: .75rem;
+    opacity: .65;
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-logo">Loyola Maryland</span>
+  <h1>Teaching with AI</h1>
+  <select id="moduleJump" onchange="showModule(this.value)">
+    <option value="overview">Course Overview</option>
+    <option value="mod0">Module 0: The AI Landscape</option>
+    <option value="mod1">Module 1: AI Foundations for Educators</option>
+    <option value="mod2">Module 2: The Pedagogical Case for AI</option>
+    <option value="mod3">Module 3: Designing AI-Enhanced Assignments</option>
+    <option value="mod4">Module 4: Building AI Learning Tools for Your Students</option>
+    <option value="mod5">Module 5: AI Video Production for Your Course</option>
+    <option value="mod6">Module 6: Teaching Students to Use AI Effectively</option>
+    <option value="mod7">Module 7: AI Across the Curriculum — Four-Tier Playbook</option>
+    <option value="mod8">Module 8: Ethics, Equity, and the Jesuit Mission</option>
+    <option value="mod9">Module 9: Your AI Integration Plan</option>
+    <option value="mod10">Module 10: Building AI-Powered Data Access Tools</option>
+    <option value="appA">Appendix A: Setting Up Claude Cowork for Faculty Work</option>
+    <option value="appB">Appendix B: Using Claude for Academic Research</option>
+  </select>
+</div>
+
+<div class="layout">
+<nav class="sidebar" id="sidebar">
+  <a href="#" onclick="showModule('overview');return false" class="active" data-mod="overview">Course Overview</a>
+  <div class="mod-header">Modules</div>
+  <a href="#" onclick="showModule('mod0');return false" data-mod="mod0">0 — The AI Landscape</a>
+  <a href="#" onclick="showModule('mod1');return false" data-mod="mod1">1 — AI Foundations for Educators</a>
+  <a href="#" onclick="showModule('mod2');return false" data-mod="mod2">2 — The Pedagogical Case for AI</a>
+  <a href="#" onclick="showModule('mod3');return false" data-mod="mod3">3 — Designing AI-Enhanced Assignments</a>
+  <a href="#" onclick="showModule('mod4');return false" data-mod="mod4">4 — Building AI Learning Tools for Your Students</a>
+  <a href="#" onclick="showModule('mod5');return false" data-mod="mod5">5 — AI Video Production for Your Course</a>
+  <a href="#" onclick="showModule('mod6');return false" data-mod="mod6">6 — Teaching Students to Use AI Effectively</a>
+  <a href="#" onclick="showModule('mod7');return false" data-mod="mod7">7 — AI Across the Curriculum — Four-Tier Playbook</a>
+  <a href="#" onclick="showModule('mod8');return false" data-mod="mod8">8 — Ethics, Equity, and the Jesuit Mission</a>
+  <a href="#" onclick="showModule('mod9');return false" data-mod="mod9">9 — Your AI Integration Plan</a>
+  <a href="#" onclick="showModule('mod10');return false" data-mod="mod10">10 — Building AI-Powered Data Access Tools</a>
+  <div class="mod-header">Appendixes</div>
+  <a href="#" onclick="showModule('appA');return false" data-mod="appA">A: Setting Up Claude Cowork for Faculty Work</a>
+  <a href="#" onclick="showModule('appB');return false" data-mod="appB">B: Using Claude for Academic Research</a>
+</nav>
+
+<div class="main">
+
+<div class="module-section active" id="overview">
+
+  <div class="course-hero">
+    <div class="hero-badge">SELLINGER SCHOOL OF BUSINESS</div>
+    <h1>Teaching with AI</h1>
+    <p class="hero-subtitle">A Faculty Guide to AI-Enhanced Pedagogy</p>
+    <div class="hero-meta">
+      <span>Dr. Jason Cherubini, DBA, CPA</span>
+      <span>•</span>
+      <span>Loyola University Maryland</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Modules</span></div>
+      <div class="stat"><span class="stat-num">~16</span><span class="stat-label">Hours</span></div>
+      <div class="stat"><span class="stat-num">62</span><span class="stat-label">Activities</span></div>
+    </div>
+  </div>
+
+  <div class="overview-text">
+    <p>This course prepares faculty to teach AI as a professional skill — not just to use AI themselves, but to design learning experiences where students develop the AI proficiency that employers now demand.</p>
+    <p>The central question: <em>"How do I design my course so that students walk out with AI skills they can demonstrate to an employer?"</em></p>
+    <p>Every module produces a deployable deliverable. Self-paced. Practical. Evidence-based.</p>
+  </div>
+
+  <div class="newsletter-box">
+    <h3>Get one email a month from the course author.</h3>
+    <p>New modules, new classroom-tested prompts, what's actually working across Jesuit business schools, and when major AI platforms change in ways that affect teaching. No spam, no marketing, unsubscribe any time.</p>
+    <form onsubmit="handleFacultyNewsletter(event)">
+      <input type="email" placeholder="you@yourinstitution.edu" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="nl-note">Dr. Jason Cherubini, DBA, CPA · Executive-in-Residence / Assistant Teaching Professor of Finance · Sellinger School of Business, Loyola University Maryland</p>
+  </div>
+
+  <h2 class="section-heading">Course Modules</h2>
+  <div class="module-grid">
+    <div class="mod-card" onclick="showModule('mod0')">
+      <div class="mod-card-num">0</div>
+      <div class="mod-card-title">The AI Landscape</div>
+      <div class="mod-card-count">6 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod1')">
+      <div class="mod-card-num">1</div>
+      <div class="mod-card-title">AI Foundations for Educators</div>
+      <div class="mod-card-count">6 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod2')">
+      <div class="mod-card-num">2</div>
+      <div class="mod-card-title">The Pedagogical Case for AI</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod3')">
+      <div class="mod-card-num">3</div>
+      <div class="mod-card-title">Designing AI-Enhanced Assignments</div>
+      <div class="mod-card-count">5 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod4')">
+      <div class="mod-card-num">4</div>
+      <div class="mod-card-title">Building AI Learning Tools for Your Students</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod5')">
+      <div class="mod-card-num">5</div>
+      <div class="mod-card-title">AI Video Production for Your Course</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod6')">
+      <div class="mod-card-num">6</div>
+      <div class="mod-card-title">Teaching Students to Use AI Effectively</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod7')">
+      <div class="mod-card-num">7</div>
+      <div class="mod-card-title">AI Across the Curriculum — Four-Tier Playbook</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod8')">
+      <div class="mod-card-num">8</div>
+      <div class="mod-card-title">Ethics, Equity, and the Jesuit Mission</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod9')">
+      <div class="mod-card-num">9</div>
+      <div class="mod-card-title">Your AI Integration Plan</div>
+      <div class="mod-card-count">4 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('mod10')">
+      <div class="mod-card-num">10</div>
+      <div class="mod-card-title">Building AI-Powered Data Access Tools</div>
+      <div class="mod-card-count">5 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('appA')">
+      <div class="mod-card-num">Appendix A</div>
+      <div class="mod-card-title">Setting Up Claude Cowork for Faculty Work</div>
+      <div class="mod-card-count">5 activities</div>
+    </div>
+    <div class="mod-card" onclick="showModule('appB')">
+      <div class="mod-card-num">Appendix B</div>
+      <div class="mod-card-title">Using Claude for Academic Research</div>
+      <div class="mod-card-count">6 activities</div>
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod0">
+  <div class="module-header">
+    <h2>Module 0: The AI Landscape</h2>
+    <p class="module-subtitle">Estimated Time: 1.5 hours • 3 Pages + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 0: The AI Landscape</h2>
+<p><strong>Estimated Time:</strong> 1.5 hours</p>
+<p><strong>Focus:</strong> <em>Understand what AI is, how the major tools work, where the technology is heading, and why it matters for higher education and the workforce</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Anthropic (March 2026): Business and Financial Operations occupations show 94.3% theoretical AI exposure and 28.4% observed exposure. Goldman Sachs: AI could displace 6–7% of workers (≈11 million jobs). WEF Future of Jobs 2025: 92 million jobs eliminated, 170 million created by 2030.</div>
+
+  </div>
+
+  <div class="content-card" id="mod0_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">What Is AI? — A Plain-Language Primer</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Part 1: What Is AI? — A Plain-Language Primer</h2>
+<h3 style="color:#333;">Key Terminology</h3>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Term</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What It Means</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Artificial Intelligence (AI)</td><td style="padding:8px;border:1px solid #ccc;">Software that performs tasks typically requiring human intelligence — understanding language, recognizing patterns, making decisions.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Generative AI (GenAI)</td><td style="padding:8px;border:1px solid #ccc;">A subset of AI that <em>creates</em> new content — text, images, code, audio — rather than just classifying or predicting. ChatGPT, Claude, and Gemini are generative AI.</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Large Language Model (LLM)</td><td style="padding:8px;border:1px solid #ccc;">The engine behind generative AI text tools. Trained on massive text datasets to predict the most likely next word. This is how ChatGPT generates responses — not by 'thinking,' but by statistical pattern completion at enormous scale.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Foundation Model</td><td style="padding:8px;border:1px solid #ccc;">A large pre-trained model (like GPT-4, Claude, or Gemini) that serves as the base for many applications. Think of it as the 'operating system' that specific tools are built on top of.</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Token</td><td style="padding:8px;border:1px solid #ccc;">The unit of text an LLM processes — roughly 3/4 of a word. A 100,000-token context window means the model can 'see' about 75,000 words at once.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Prompt</td><td style="padding:8px;border:1px solid #ccc;">The input you give an AI system. Prompt engineering is the skill of writing effective prompts to get useful outputs. This is the #1 teachable AI skill.</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Hallucination</td><td style="padding:8px;border:1px solid #ccc;">When an AI generates confident-sounding but factually incorrect output. This happens because LLMs predict likely text patterns, not truth. This is the #1 risk faculty and students must understand.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Fine-Tuning</td><td style="padding:8px;border:1px solid #ccc;">Additional training of a foundation model on specialized data to improve performance in a specific domain (e.g., medical, legal, financial).</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">RAG (Retrieval-Augmented Generation)</td><td style="padding:8px;border:1px solid #ccc;">A technique where AI retrieves relevant documents before generating a response, grounding its output in specific sources. Custom GPTs and NotebookLM use this approach.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Agentic AI</td><td style="padding:8px;border:1px solid #ccc;">AI systems that can plan, use tools, and take multi-step actions autonomously — not just respond to single prompts. This is the frontier of AI capability in 2026.</td></tr></table>
+<h3 style="color:#333;">How LLMs Actually Work (The 2-Minute Version)</h3>
+<p>Large language models work by predicting the next token in a sequence. During training, the model reads billions of documents and learns statistical patterns: which words tend to follow which other words, in what contexts. When you ask ChatGPT a question, it is not 'looking up an answer' — it is generating the most statistically likely sequence of words given your prompt and its training data.</p>
+<p>This has two critical implications for education:</p>
+<ul><li><strong>LLMs are fluent but not infallible.</strong> They produce grammatically perfect, confident-sounding text even when the content is wrong. Students (and faculty) must learn to verify AI outputs, not just accept them.</li><li><strong>LLMs do not know your course.</strong> Without access to your specific materials, they generate generic responses based on patterns in their training data. This is why custom tools (Module 4) are so much more effective than generic AI for teaching.</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod0_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">The Major AI Platforms & Higher Ed Trends</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Part 2: The Major AI Platforms</h2>
+<p>As of early 2026, four major AI platforms dominate the landscape:</p>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Platform</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Key Strengths</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Pricing</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Key Features</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">ChatGPT (OpenAI)</td><td style="padding:8px;border:1px solid #ccc;">Most widely adopted; strong general-purpose performance; mature Custom GPT builder</td><td style="padding:8px;border:1px solid #ccc;">Free tier available; Plus: $20/mo; Team: $25/user/mo</td><td style="padding:8px;border:1px solid #ccc;">Custom GPTs, DALL-E, Code Interpreter, web browsing</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Claude (Anthropic)</td><td style="padding:8px;border:1px solid #ccc;">Excellent for long, nuanced analysis; strong reasoning; 200K token context</td><td style="padding:8px;border:1px solid #ccc;">Free tier; Pro: $20/mo; Team: $25/user/mo</td><td style="padding:8px;border:1px solid #ccc;">Projects (knowledge base), Artifacts, extended thinking</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Gemini (Google)</td><td style="padding:8px;border:1px solid #ccc;">Deep Google Workspace integration; multimodal; strong for research</td><td style="padding:8px;border:1px solid #ccc;">Free with Google; Advanced: $19.99/mo; included in Workspace for Education</td><td style="padding:8px;border:1px solid #ccc;">Gems, NotebookLM, Google Drive integration, Deep Research</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Copilot (Microsoft)</td><td style="padding:8px;border:1px solid #ccc;">Embedded in Microsoft 365; enterprise-focused</td><td style="padding:8px;border:1px solid #ccc;">Free Copilot chat; M365 Copilot: $30/user/mo</td><td style="padding:8px;border:1px solid #ccc;">In-app AI in all M365 tools, Copilot Studio</td></tr></table>
+<h2 style="color:#1A5632;">Part 3: AI in Higher Education — Where We Are</h2>
+<p>The higher education landscape around AI is shifting from panic to strategy:</p>
+<ul><li><strong>2023–2024: The reaction phase.</strong> Institutions focused on academic integrity concerns. Many adopted ban-or-ignore policies.</li><li><strong>2025: The experimentation phase.</strong> Individual faculty began piloting AI. AACSB noted 64% of faculty have used GenAI in teaching, but only 12% of schools mandate AI training.</li><li><strong>2026: The integration phase.</strong> Leading schools move from individual experiments to institutional strategy. AACSB's January 2026 framework: investments in faculty capability, policies, and culture outperform technology-first approaches.</li></ul>
+<h3 style="color:#333;">Peer and Aspirant Institutions</h3>
+<ul><li><strong>Villanova:</strong> AI/ML minor, AI-integrated MS in Business Analytics, MBA Applied AI/ML specialization</li><li><strong>Fairfield (Jesuit peer):</strong> AI concentration within MBA, first graduate expected 2026</li><li><strong>UW Foster:</strong> Mandatory AI bootcamp for every incoming student with six formal AI learning objectives</li><li><strong>Colorado Leeds:</strong> AI integrated across 14 core business courses, nearly 50 instructors</li><li><strong>NYU Stern:</strong> Open-source AI in Finance course launched Spring 2026</li><li><strong>Frankfurt School:</strong> Partnered directly with OpenAI to deploy ChatGPT Edu</li></ul>
+<h2 style="color:#1A5632;">Part 4: AI and the Workforce — Why This Matters for Our Students</h2>
+<p>The labor market data is unambiguous: AI proficiency is the new Excel proficiency.</p>
+<ul><li><strong>85–94% theoretical exposure:</strong> The vast majority of tasks in business and financial operations roles could theoretically be performed at least twice as fast with current AI (Anthropic 2026).</li><li><strong>28% and rising:</strong> AI is already being used in roughly one in four business-related professional tasks.</li><li><strong>#1 future skill:</strong> GMAC's 2025 survey of 1,108 recruiters: AI fluency is the single most important skill for the future of business graduates.</li><li><strong>The gap is closing:</strong> The 65-percentage-point gap between theoretical capability and current usage is not a buffer — it is a closing window.</li></ul>
+<div style="border-left:4px solid #1A5632;background:#F0F7F2;padding:12px 16px;margin:12px 0;border-radius:4px;">AI proficiency is the new Excel proficiency. The question is not whether our students need it — it is whether Sellinger will be the school that taught them, or the school they graduated from before they had to learn it on their own.</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod0_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Activities: Platform Tour, Hallucination Hunt, Evidence Brief</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Hands-On Activities</h2>
+<h3 style="color:#333;">Activity 0.1: AI Platform Tour</h3>
+<p>Visit each of the four major AI platforms. For each one, ask the same discipline-specific question. Compare: response quality, depth, speed, and what the free version offers vs. paid.</p>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>Use the same prompt across all platforms for a true apples-to-apples comparison. A good test: 'Explain [key concept from your course] as if to an undergraduate student who is struggling with it. Include one example.'</div>
+<h3 style="color:#333;">Activity 0.2: Hallucination Hunt</h3>
+<p>Ask any AI platform 5 factual questions from your discipline — questions where you know the correct answer. Identify: Which did it get right? Which did it get wrong? How confident did it sound? Could a student tell the difference?</p>
+<p>This exercise is the foundation for everything else in this course. If you don't understand where AI fails, you can't design assignments that teach students to use it well.</p>
+<h3 style="color:#333;">Activity 0.3: The Workforce Evidence Brief</h3>
+<p>Using the evidence presented in this module (Anthropic, GMAC, Goldman Sachs, WEF, McKinsey, AACSB), write a one-paragraph answer to: 'Why should students in my discipline learn to use AI?' This becomes the 'why' for your syllabus AI-use policy.</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod0_act4">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 0 Deliverable: AI Landscape Brief</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit a 1-page AI Landscape Brief for your discipline containing:</p>
+<ul><li>A 3-sentence summary of what AI is (in plain language you would use with students)</li><li>A comparison of 2 platforms you tested, with your recommendation for your course</li><li>2-3 hallucination examples from your discipline</li><li>Your one-paragraph workforce evidence statement</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod0_act5">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 0 Discussion: What Does AI Mean for Your Discipline?</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your workforce evidence statement and discuss: What specific tasks in your discipline are most affected by AI? Where do you see the biggest gap between what we teach and what students will need?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod1">
+  <div class="module-header">
+    <h2>Module 1: AI Foundations for Educators</h2>
+    <p class="module-subtitle">Estimated Time: 1.5 hours • 3 Pages + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 1: AI Foundations for Educators</h2>
+<p><strong>Estimated Time:</strong> 1.5 hours</p>
+<p><strong>Focus:</strong> <em>Build personal AI fluency using the tools your students have access to, so you can model effective AI use in your teaching</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>GMAC 2025: AI fluency is the single most important future skill for business graduates. Anthropic March 2026: 94.3% of tasks in Business &amp; Financial Operations are theoretically AI-exposed, with 28.4% already being performed with AI assistance.</div>
+
+  </div>
+
+  <div class="content-card" id="mod1_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">What's Available to Loyola Students</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">What's Available to Loyola Students (and What It Costs)</h2>
+<h3 style="color:#333;">Institutionally Provided (Free to Students)</h3>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Tool</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Access</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Notes</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Microsoft Copilot</td><td style="padding:8px;border:1px solid #ccc;">Integrated into Loyola's Microsoft 365; all students and faculty have access</td><td style="padding:8px;border:1px solid #ccc;">Embedded in Word, Excel, PowerPoint, Outlook, Teams. Most universally available AI tool on campus.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Google Gemini (Pro)</td><td style="padding:8px;border:1px solid #ccc;">Available through Loyola's Google Workspace for Education</td><td style="padding:8px;border:1px solid #ccc;">Includes Gems (custom personas), NotebookLM, and Google Drive integration.</td></tr></table>
+<h3 style="color:#333;">Free Tiers (Available But Limited)</h3>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Tool</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Free Tier</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Limitations</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">ChatGPT (OpenAI)</td><td style="padding:8px;border:1px solid #ccc;">Free account with GPT-4o access (limited daily messages)</td><td style="padding:8px;border:1px solid #ccc;">No Custom GPTs, limited uploads. Plus ($20/mo) removes limits and enables GPT Builder.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Claude (Anthropic)</td><td style="padding:8px;border:1px solid #ccc;">Free account with Claude Sonnet access</td><td style="padding:8px;border:1px solid #ccc;">Limited daily messages. Pro ($20/mo) adds Projects. Note: Loyola's systems do not currently support the Claude for Excel plugin.</td></tr></table>
+<h3 style="color:#333;">Paid Only</h3>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Tool</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Cost</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Notes</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">ChatGPT Plus</td><td style="padding:8px;border:1px solid #ccc;">$20/month</td><td style="padding:8px;border:1px solid #ccc;">Required for Custom GPT creation. Many students will not pay — design accordingly.</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Claude Pro</td><td style="padding:8px;border:1px solid #ccc;">$20/month</td><td style="padding:8px;border:1px solid #ccc;">Required for Projects. Strong for long analytical work but less accessible.</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Specialized tools</td><td style="padding:8px;border:1px solid #ccc;">$10–$20/month</td><td style="padding:8px;border:1px solid #ccc;">Perplexity Pro, GitHub Copilot, etc. Useful for specific disciplines.</td></tr></table>
+<div style="border-left:4px solid #E65100;background:#FFF3E0;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#E65100;">Important</strong><br/>Design for universal access. Start with tools every student has: Copilot and Gemini Pro. When you build a Custom GPT (Module 4), consider building a Gem as the student-facing version since all students have Gemini Pro.</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod1_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">The RACE Prompting Framework</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">The RACE Prompting Framework</h2>
+<p>Effective prompting is the single most teachable AI skill:</p>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Element</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What It Means</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Example</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">R — Role</td><td style="padding:8px;border:1px solid #ccc;">Tell the AI what role to play</td><td style="padding:8px;border:1px solid #ccc;">'You are a financial analyst preparing a report for a CFO'</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">A — Action</td><td style="padding:8px;border:1px solid #ccc;">Specify what you want it to do</td><td style="padding:8px;border:1px solid #ccc;">'Analyze the following income statement and identify the three most significant trends'</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">C — Context</td><td style="padding:8px;border:1px solid #ccc;">Provide relevant background</td><td style="padding:8px;border:1px solid #ccc;">'This is a mid-size manufacturing company. Revenue has grown 8% annually for three years.'</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">E — Expectation</td><td style="padding:8px;border:1px solid #ccc;">Define the format and quality</td><td style="padding:8px;border:1px solid #ccc;">'Provide your analysis in 3 bullet points, each under 50 words, suitable for a board presentation'</td></tr></table>
+<p><strong>A weak prompt:</strong> 'Tell me about bonds.'</p>
+<p><strong>A RACE prompt:</strong> 'You are a finance professor explaining to an undergraduate who is struggling. Explain the inverse relationship between bond prices and interest rates. Assume the student understands basic present value but not duration. Use a simple numerical example with a $1,000 par bond and show the math.'</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod1_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Capabilities, Limitations & Activities</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Capabilities and Limitations by Task</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI Does This Well</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI Does This Inconsistently</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI Does This Poorly</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Explaining concepts in plain language; Generating practice problems; Summarizing documents; Drafting first versions; Translating formats; Code generation</td><td style="padding:8px;border:1px solid #ccc;">Factual accuracy (especially recent data); Math computation; Citing real sources; Complex multi-step reasoning; Discipline-specific conventions</td><td style="padding:8px;border:1px solid #ccc;">Knowing what it doesn't know; Real-time data; Ethical/legal judgment; Original research; Understanding your specific course</td></tr></table>
+<h2 style="color:#1A5632;">Hands-On Activities</h2>
+<h3 style="color:#333;">Activity 1.1: Platform Test Drive</h3>
+<p>Test the same discipline-specific question on Copilot, Gemini Pro, ChatGPT free, and Claude free. Compare output quality.</p>
+<h3 style="color:#333;">Activity 1.2: RACE Drill</h3>
+<p>Write 5 prompts for common teaching tasks using the RACE framework. Run them and evaluate outputs.</p>
+<h3 style="color:#333;">Activity 1.3: Student Access Audit</h3>
+<p>For your course: What AI tools can every student access for free? What requires paid? What's the free alternative? Document this for your syllabus policy (Module 3) and onboarding (Module 6).</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod1_act4">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 1 Deliverable: RACE Prompt Library + Student Access Audit</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>A personal prompt library of 10+ discipline-specific RACE prompts organized by teaching task (assessment, feedback, content, research, admin). Each tested and annotated with which platform produced the best output.</li><li>A completed Student Access Audit documenting what AI tools your students can and cannot access at Loyola.</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod1_act5">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 1 Discussion: Best Prompts</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your 2 best RACE prompts and the output they produced. Which platform gave the best result and why?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod2">
+  <div class="module-header">
+    <h2>Module 2: The Pedagogical Case for AI</h2>
+    <p class="module-subtitle">Estimated Time: 1 hour • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 2: The Pedagogical Case for AI in Your Classroom</h2>
+<p><strong>Estimated Time:</strong> 1 hour</p>
+<p><strong>Focus:</strong> <em>Understand the evidence for AI-enhanced learning and the Blooms-aligned framework</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Chung et al. (2025, Wharton/Penn RCT, n=770): Well-designed AI tutoring improved unassisted exam performance by 0.15 SD (p &lt; 0.05) — equivalent to 6–9 months of additional schooling. Mechanism: engagement quality, not quantity. Equity: beginners gained +0.215 SD. 'Access to educational technology alone is insufficient to improve outcomes; successful deployments require careful design.'</div>
+
+  </div>
+
+  <div class="content-card" id="mod2_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Research Evidence, Scaffold vs. Crutch, Four-Tier Framework</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">The Chung et al. (2025) RCT — The Study You Need to Know</h2>
+<p>Key findings from the Wharton/Penn randomized controlled trial:</p>
+<ul><li><strong>Sample:</strong> 770 students randomly assigned to treatment (AI tutor) or control</li><li><strong>Effect size:</strong> 0.15 SD improvement on unassisted exam performance — equivalent to 6–9 months of additional schooling</li><li><strong>Mechanism:</strong> Gains came from increased engagement quality, not quantity. Treatment students exhibited 'significantly higher chat quality' (p &lt; 0.001)</li><li><strong>Equity:</strong> Beginners benefited most (+0.215 SD), while experienced students showed negligible effects (+0.008 SD)</li><li><strong>Design matters:</strong> The AI tutor was designed to 'avoid providing answers unless students first demonstrate substantial effort' (p. 8)</li><li><strong>Cost:</strong> Zero additional instruction time, zero additional teacher workload</li></ul>
+<div style="border-left:4px solid #1A5632;background:#F0F7F2;padding:12px 16px;margin:12px 0;border-radius:4px;">The headline: access alone is insufficient. A chatbot that gives direct answers may harm learning. A chatbot designed with pedagogical intent improves it — significantly and equitably. This is why Module 4 (building custom AI tools) is the flagship deliverable.</div>
+<h2 style="color:#1A5632;">The Scaffold vs. Crutch Distinction</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI as Scaffold (Enhances Learning)</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI as Crutch (Bypasses Learning)</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Student asks AI to explain a struggling concept; AI guides through steps; Student checks own work; AI generates practice at right difficulty; Student iterates on feedback</td><td style="padding:8px;border:1px solid #ccc;">Student pastes assignment into AI and submits; AI provides direct answers; Student avoids difficult material; AI writes the essay/code; Student accepts output uncritically</td></tr></table>
+<p>The same AI tool can be either a scaffold or a crutch. The difference is entirely in how the learning experience is designed.</p>
+<h2 style="color:#1A5632;">The Four-Tier Bloom's-Aligned Framework</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Tier</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Bloom's Level</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI Role</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Example</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Tier 1</td><td style="padding:8px;border:1px solid #ccc;">Remember &amp; Understand</td><td style="padding:8px;border:1px solid #ccc;">AI as guided learning tool</td><td style="padding:8px;border:1px solid #ccc;">FIN320: Custom AI tutor for TVM problems</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Tier 2</td><td style="padding:8px;border:1px solid #ccc;">Apply &amp; Analyze</td><td style="padding:8px;border:1px solid #ccc;">AI as analytical co-pilot</td><td style="padding:8px;border:1px solid #ccc;">FIN322: AI-assisted financial statement analysis</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Tier 3</td><td style="padding:8px;border:1px solid #ccc;">Evaluate &amp; Create</td><td style="padding:8px;border:1px solid #ccc;">AI as professional co-pilot</td><td style="padding:8px;border:1px solid #ccc;">Modeling: AI-assisted DCF with manual verification</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Tier 4</td><td style="padding:8px;border:1px solid #ccc;">Synthesize &amp; Integrate</td><td style="padding:8px;border:1px solid #ccc;">AI as integrated workflow</td><td style="padding:8px;border:1px solid #ccc;">Capstone: Full AI-integrated equity research</td></tr></table>
+<h2 style="color:#1A5632;">Activities</h2>
+<h3 style="color:#333;">Activity 2.1: Tier Mapping</h3><p>Identify which tier your course occupies. What AI integration should look like at that level? What would be inappropriate?</p>
+<h3 style="color:#333;">Activity 2.2: Scaffold vs. Crutch Analysis</h3><p>Review 4 sample AI-integrated assignments (provided below). Classify each as scaffold or crutch. For each crutch, redesign it as a scaffold.</p>
+<h3 style="color:#333;">Activity 2.3: Discussion Post</h3><p>Share one learning goal AI could help achieve — and one where AI use would undermine learning.</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod2_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 2 Deliverable: Course Tier Mapping</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit a completed Tier Mapping document:</p><ul><li>Your course positioned in the four-tier framework</li><li>3 specific AI integration opportunities identified</li><li>Each classified as scaffold or crutch with explanation</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod2_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 2 Discussion: Scaffold or Crutch?</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share one specific learning goal in your course that AI could help students achieve — and one where AI use would undermine the learning. Explain your reasoning using the scaffold/crutch framework.</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod3">
+  <div class="module-header">
+    <h2>Module 3: Designing AI-Enhanced Assignments</h2>
+    <p class="module-subtitle">Estimated Time: 2 hours • 2 Pages + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 3: Designing AI-Enhanced Assignments</h2>
+<p><strong>Estimated Time:</strong> 2 hours</p>
+<p><strong>Focus:</strong> <em>Redesign assignments so AI is part of the learning process, not a shortcut around it</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Chung et al. (2025): Learning gains were driven by 'practice quality, not quantity' — students who engaged more productively with AI (explanation-seeking, iterative debugging) outperformed those who sought direct answers. AACSB 2026: assessment redesign is central to effective AI integration.</div>
+
+  </div>
+
+  <div class="content-card" id="mod3_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Four Strategies & AI-Use Policy Spectrum</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">The Assessment Problem</h2>
+<p>Every take-home assignment in every course at every university is now AI-completable. The solution is not to ban AI — it is to redesign assignments so the human contribution is the assessed element.</p>
+<h2 style="color:#1A5632;">Four Assignment Strategies</h2>
+<h3 style="color:#333;">Strategy 1: Comparative Analysis</h3><p>Students complete work both manually and with AI, then write a critical evaluation of the differences.</p><p><strong>Example (Finance):</strong> 'Build a DCF valuation for Company X using only the formulas from Chapter 8. Then ask AI to build the same valuation. Write a 2-page analysis comparing the two.'</p>
+<h3 style="color:#333;">Strategy 2: AI Stress-Testing</h3><p>Students receive AI-generated work containing errors and must diagnose and correct them.</p><p><strong>Example (Accounting):</strong> 'Here is an AI-generated journal entry for a complex lease transaction. Identify all errors. Cite the relevant ASC guidance for each correction.'</p>
+<h3 style="color:#333;">Strategy 3: Live Application</h3><p>Students use AI in real time during class, with the instructor observing process and judgment.</p><p><strong>Example (Marketing):</strong> 'In class today, use AI to develop a positioning strategy. You have 30 minutes. Then present and defend your prompting choices.'</p>
+<h3 style="color:#333;">Strategy 4: Process Documentation</h3><p>Students submit their AI prompts, iterations, and decision logs alongside final deliverables.</p><p><strong>Example (Management):</strong> 'Submit your case analysis AND a decision log showing every prompt, what AI suggested, what you accepted/modified/rejected, and your reasoning.'</p>
+<h2 style="color:#1A5632;">The AI-Use Policy Spectrum</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Policy Level</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Description</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Appropriate When</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Prohibited</td><td style="padding:8px;border:1px solid #ccc;">No AI use permitted</td><td style="padding:8px;border:1px solid #ccc;">Rare. In-class exams testing foundational knowledge</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Permitted with Disclosure</td><td style="padding:8px;border:1px solid #ccc;">AI may be used, all use documented</td><td style="padding:8px;border:1px solid #ccc;">Good default for Tier 1–2 courses</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Encouraged</td><td style="padding:8px;border:1px solid #ccc;">AI use expected and assessed</td><td style="padding:8px;border:1px solid #ccc;">Tier 2–3 where AI is a professional skill</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Required</td><td style="padding:8px;border:1px solid #ccc;">AI must be used; quality of AI collaboration graded</td><td style="padding:8px;border:1px solid #ccc;">Tier 3–4 courses and capstones</td></tr></table>
+<h2 style="color:#1A5632;">Rubric Design for AI-Augmented Work</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Criterion</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Excellent</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Adequate</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Insufficient</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Prompt Quality</td><td style="padding:8px;border:1px solid #ccc;">RACE framework; specific, iterative</td><td style="padding:8px;border:1px solid #ccc;">Basic prompts; limited iteration</td><td style="padding:8px;border:1px solid #ccc;">Copy-pasted assignment as prompt</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Critical Evaluation</td><td style="padding:8px;border:1px solid #ccc;">Identifies errors/gaps with reasoning</td><td style="padding:8px;border:1px solid #ccc;">Surface-level evaluation</td><td style="padding:8px;border:1px solid #ccc;">No evaluation; accepted wholesale</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Professional Judgment</td><td style="padding:8px;border:1px solid #ccc;">Clear decisions with justification</td><td style="padding:8px;border:1px solid #ccc;">Some decisions, limited justification</td><td style="padding:8px;border:1px solid #ccc;">No evidence of independent judgment</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Domain Accuracy</td><td style="padding:8px;border:1px solid #ccc;">Correct; AI errors identified and fixed</td><td style="padding:8px;border:1px solid #ccc;">Mostly accurate; some AI errors remain</td><td style="padding:8px;border:1px solid #ccc;">Significant uncorrected AI errors</td></tr></table>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod3_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Activities: Audit, Redesign, Policy Draft</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Activities</h2>
+<h3 style="color:#333;">Activity 3.1: AI-Completability Audit</h3><p>Take 3 current assignments. Paste instructions into AI. Score each 1–5 on AI-completability.</p>
+<h3 style="color:#333;">Activity 3.2: Assignment Redesign</h3><p>Take your most AI-vulnerable assignment and redesign using one of the four strategies. Write full instructions, submission requirements, and rubric.</p>
+<h3 style="color:#333;">Activity 3.3: AI-Use Policy Draft</h3><p>Draft your course-specific AI-use policy: what's permitted/required, how to disclose, consequences for undisclosed use.</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod3_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 3 Deliverable: Redesigned Assignment + AI-Use Policy</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>One fully redesigned AI-enhanced assignment with complete student instructions, rubric (including process-based criteria), and explanation of which strategy you used and why</li><li>Draft syllabus AI-use policy for your course</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod3_act4">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 3 Discussion: Assignment Redesign Gallery</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your redesigned assignment. What strategy did you use? What was your biggest 'aha moment' about how AI changes assessment?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod4">
+  <div class="module-header">
+    <h2>Module 4: Building AI Learning Tools for Your Students</h2>
+    <p class="module-subtitle">Estimated Time: 2 hours • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 4: Building AI Learning Tools for Your Students</h2>
+<p><strong>Estimated Time:</strong> 2 hours</p>
+<p><strong>Focus:</strong> <em>Create custom AI tools (GPTs, Gems, NotebookLM) that serve specific pedagogical goals</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Chung et al. (2025): The AI tutor was designed to 'avoid providing answers unless students first demonstrate substantial effort' — and this teach-don't-tell design contributed to the 0.15 SD learning gain. The FIN320 pilot at Loyola: 83% usage, 81% found helpful, 60/85 preferred course-specific tool over generic AI.</div>
+
+  </div>
+
+  <div class="content-card" id="mod4_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Design, Build, and Test Your Custom GPT or Gem</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Why Build a Custom Tool?</h2>
+<p>Generic AI creates three problems: accuracy (doesn't know your course), pedagogy (gives direct answers), and boundaries (no guardrails). Custom tools solve all three.</p>
+<h2 style="color:#1A5632;">Design Before You Build</h2>
+<h3 style="color:#333;">Decision 1: Purpose and Audience</h3><ul><li>What role will this GPT play? (tutor, study buddy, practice problem generator, writing coach)</li><li>Who will use it? When? What should it NOT do?</li></ul>
+<h3 style="color:#333;">Decision 2: Pedagogical Style</h3>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Style</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Behavior</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Best For</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Socratic Guide</td><td style="padding:8px;border:1px solid #ccc;">Asks questions to lead students to answers; never gives direct solutions</td><td style="padding:8px;border:1px solid #ccc;">Conceptual courses, critical thinking</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Structured Tutor</td><td style="padding:8px;border:1px solid #ccc;">Walks through problems step-by-step; shows method, then has students practice</td><td style="padding:8px;border:1px solid #ccc;">Quantitative courses, problem-solving</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Study Companion</td><td style="padding:8px;border:1px solid #ccc;">Answers questions directly, explains concepts, generates practice</td><td style="padding:8px;border:1px solid #ccc;">Content-heavy courses, exam prep</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Writing Coach</td><td style="padding:8px;border:1px solid #ccc;">Reviews drafts, suggests improvements, asks clarifying questions</td><td style="padding:8px;border:1px solid #ccc;">Writing-intensive courses, research</td></tr></table>
+<h3 style="color:#333;">Decision 3: Knowledge Base Inventory</h3><p>List every document you plan to upload. Prioritize documents students ask about most.</p>
+<h3 style="color:#333;">Decision 4: Boundaries</h3><p>Define what the tool should refuse to do.</p>
+<h2 style="color:#1A5632;">Building Your GPT (Step by Step)</h2>
+<ol><li>Go to chat.openai.com → Explore GPTs → Create → Configure tab</li><li>Name and Description (something students recognize)</li><li>Paste system instructions (Identity, Pedagogy, Knowledge, Boundaries, Tone)</li><li>Upload knowledge base files (syllabus, formulas, study guides)</li><li>Configure capabilities (Web: OFF, Code Interpreter: ON for quant courses)</li><li>Add 4 conversation starters for common use cases</li><li>Save → 'Only people with a link' → Copy URL for Moodle</li></ol>
+<h2 style="color:#1A5632;">Test Protocol: 10 Prompts Across 5 Categories</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Category</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Test Prompt</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What You're Checking</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Factual (×2)</td><td style="padding:8px;border:1px solid #ccc;">Questions from your course materials</td><td style="padding:8px;border:1px solid #ccc;">Does it cite uploaded materials accurately?</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Procedural (×2)</td><td style="padding:8px;border:1px solid #ccc;">Walk through a problem; explain to struggling student</td><td style="padding:8px;border:1px solid #ccc;">Does it follow your pedagogical approach?</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Boundary (×2)</td><td style="padding:8px;border:1px solid #ccc;">Solve graded homework; go off-topic</td><td style="padding:8px;border:1px solid #ccc;">Does it refuse/redirect appropriately?</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Edge Case (×2)</td><td style="padding:8px;border:1px solid #ccc;">Wrong premise question; same question two ways</td><td style="padding:8px;border:1px solid #ccc;">Catches errors? Consistent answers?</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Student Voice (×2)</td><td style="padding:8px;border:1px solid #ccc;">Informal prompt; 'just give me the answer'</td><td style="padding:8px;border:1px solid #ccc;">Handles imprecision? Maintains boundaries?</td></tr></table>
+<h2 style="color:#1A5632;">Google Gems (Free for Loyola Students)</h2>
+<ol><li>Go to gemini.google.com → Gem manager → New Gem</li><li>Paste system instructions into Instructions field</li><li>Upload up to 10 files (or link Google Drive for live updates)</li><li>Save and share the Gem link</li></ol>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>Build both: a Custom GPT for the richest experience and a Gem as the universal fallback for all students. Use the same system instructions for both.</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod4_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 4 Deliverable: Working Custom GPT/Gem + Test Results</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>GPT Design Document (all four design decisions)</li><li>Shareable link to your custom GPT or Gem</li><li>Test Results Document: all 10 test prompts, AI responses (summarized), pass/fail, and changes made</li></ul>
+<h3 style="color:#333;">Evaluation Criteria</h3>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Criterion</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Weight</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Purposeful Design</td><td style="padding:8px;border:1px solid #ccc;">25%</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Effective Instructions</td><td style="padding:8px;border:1px solid #ccc;">25%</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Knowledge Grounding</td><td style="padding:8px;border:1px solid #ccc;">25%</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Testing Rigor</td><td style="padding:8px;border:1px solid #ccc;">25%</td></tr></table>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod4_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 4 Discussion: GPT Showcase</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share the link to your custom GPT or Gem. Describe what it does, what pedagogical style you chose, and what surprised you during testing. Try a colleague's tool and leave feedback!</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod5">
+  <div class="module-header">
+    <h2>Module 5: AI Video Production for Your Course</h2>
+    <p class="module-subtitle">Estimated Time: 2 hours • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 5: AI Video Production for Your Course</h2>
+<p><strong>Estimated Time:</strong> 2 hours</p>
+<p><strong>Focus:</strong> <em>Create professional video content using AI — from enhancing existing recordings to building new videos from scratch</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Xu et al. (2025, British Journal of Educational Technology): AI-generated instructional videos showed no significant difference in learning performance compared to traditional recorded lectures, with higher retention scores. Frontiers in Computer Science (2025): A rapid review of 15 studies found positive outcomes when faculty retained editorial control over scripts and design.</div>
+
+  </div>
+
+  <div class="content-card" id="mod5_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Three Pathways, Toolkit, HeyGen Walkthrough & Design Principles</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Three Pathways to AI Video</h2>
+<h3 style="color:#333;">Pathway 1: Enhance Existing Recordings</h3><p>You already have lecture recordings. AI tools can improve them: auto-captioning, summarization (extract 5-min highlights from 75-min lecture), translation/dubbing (HeyGen preserves lip movements), background cleanup, chapter markers.</p><p><strong>Best for:</strong> Faculty who already have recorded content and want to modernize it.</p>
+<h3 style="color:#333;">Pathway 2: Create New AI-Avatar Videos from Scratch</h3><p>Write a script, choose an avatar (or clone yourself), AI generates a professional video.</p><p><strong>Best for:</strong> New course content, micro-lecture libraries, content that changes often.</p>
+<h3 style="color:#333;">Pathway 3: Repurpose Written Materials</h3><p>Upload PowerPoint → narrated avatar video. Paste notes → explainer video. Feed materials to NotebookLM → podcast-style audio. Convert case studies → video walkthroughs.</p>
+<h2 style="color:#1A5632;">The AI Video Toolkit</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Tool</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Best For</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Cost</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Avatar?</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">HeyGen</td><td style="padding:8px;border:1px solid #ccc;">Full video production; personal avatar cloning; translation</td><td style="padding:8px;border:1px solid #ccc;">Free (3/mo); Creator $29/mo</td><td style="padding:8px;border:1px solid #ccc;">700+ stock; custom clone</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Synthesia</td><td style="padding:8px;border:1px solid #ccc;">Polished training videos; institutional use</td><td style="padding:8px;border:1px solid #ccc;">Starter $22/mo; Creator $67/mo</td><td style="padding:8px;border:1px solid #ccc;">240+ stock; custom clone</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Colossyan</td><td style="padding:8px;border:1px solid #ccc;">Interactive videos with quizzes/branching</td><td style="padding:8px;border:1px solid #ccc;">Starter $27/mo; Pro $87/mo</td><td style="padding:8px;border:1px solid #ccc;">600+ voices; stock avatars</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">NotebookLM</td><td style="padding:8px;border:1px solid #ccc;">Audio overviews from documents (free!)</td><td style="padding:8px;border:1px solid #ccc;">Free with Google account</td><td style="padding:8px;border:1px solid #ccc;">Audio only</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Descript</td><td style="padding:8px;border:1px solid #ccc;">Editing existing recordings; transcript-based editing</td><td style="padding:8px;border:1px solid #ccc;">Free (limited); $24/mo</td><td style="padding:8px;border:1px solid #ccc;">No avatars; real footage</td></tr></table>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>For most Sellinger faculty, HeyGen is the recommended starting point. NotebookLM is the free companion for audio content.</div>
+<h2 style="color:#1A5632;">Creating Your First AI Video (HeyGen Walkthrough)</h2>
+<h3 style="color:#333;">Step 1: Write Your Script</h3><ul><li>Open with the learning objective ('By the end of this video, you'll be able to...')</li><li>Conversational language — write how you talk</li><li>500–750 words for 3–5 minutes (≈150 words/minute)</li><li>Include transition markers for visual changes</li><li>End with summary and next-step prompt</li></ul>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>Use AI to draft! Prompt: 'Write a 600-word instructional video script explaining [topic] to undergraduate business students. Conversational tone, one worked example, transition markers.' Then edit for accuracy.</div>
+<h3 style="color:#333;">Steps 2–5: Build, Review, Publish</h3><ol><li>Choose avatar (stock or personal clone) and background</li><li>Paste script, select voice, add slides/images alongside avatar</li><li>Preview each scene — check pacing, pronunciation, transitions</li><li>Generate (2–5 min for a 5-min video), review, iterate, download 1080p</li><li>Upload to Moodle; add to Panopto for analytics; verify auto-captions</li></ol>
+<h2 style="color:#1A5632;">Creating Your Personal Avatar</h2><ol><li>Record a 2-minute training video of yourself (look at camera, good lighting)</li><li>Upload to HeyGen's Instant or Studio Avatar tool</li><li>Clone your voice with a short audio sample</li><li>Now any script you write is delivered by your AI avatar in your voice</li></ol>
+<div style="border-left:4px solid #E65100;background:#FFF3E0;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#E65100;">Important</strong><br/>If you use a personal avatar, disclose to students. A simple slide: 'This video features an AI version of Professor [Name] for production efficiency.' Models the transparency we teach in Module 8.</div>
+<h2 style="color:#1A5632;">NotebookLM Audio Overviews</h2><ol><li>notebooklm.google.com → new notebook</li><li>Upload course materials (PDFs, notes, articles)</li><li>Click 'Generate Audio Overview' — creates conversational summary</li><li>Review for accuracy; share as supplemental study resource</li></ol>
+<h2 style="color:#1A5632;">Video Design Principles</h2><ul><li><strong>Segmenting:</strong> 3–7 minute chunks. Three 5-min videos &gt; one 15-min video.</li><li><strong>Signaling:</strong> Visual cues (text overlays, highlights) to direct attention.</li><li><strong>Personalization:</strong> Conversational language ('you' and 'we').</li><li><strong>Redundancy avoidance:</strong> Don't display script on screen — show complementary visuals.</li><li><strong>Weeding:</strong> Every sentence must earn its place.</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod5_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 5 Deliverable: AI Video + Audio Overview + Strategy Map</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>One completed AI-generated instructional video (3–5 min) on a topic from your course</li><li>The script used to produce it</li><li>One NotebookLM Audio Overview from your course materials</li><li>A Video Content Strategy Map: 5–10 planned videos with topic, type, length, and priority</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod5_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 5 Discussion: Video Screening Room</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your completed AI video (upload or link). What topic did you choose and why? What was easier than expected? What was harder? Watch a colleague's video and provide feedback.</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod6">
+  <div class="module-header">
+    <h2>Module 6: Teaching Students to Use AI Effectively</h2>
+    <p class="module-subtitle">Estimated Time: 1.5 hours • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 6: Teaching Students to Use AI Effectively</h2>
+<p><strong>Estimated Time:</strong> 1.5 hours</p>
+<p><strong>Focus:</strong> <em>Design the student-facing AI skill development experience: from onboarding to professional-grade use</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Chung et al. (2025): Treatment students exhibited 'significantly higher chat quality' (p &lt; 0.001) — explanation-seeking and iterative debugging rather than answer-seeking. Teaching students HOW to interact with AI is as important as giving them access.</div>
+
+  </div>
+
+  <div class="content-card" id="mod6_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Onboarding, Prompt Scaffolding, In-Class Activities & Metacognition</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">The Onboarding Problem</h2><p>FIN320 pilot finding: students who didn't use the AI TA said they 'didn't know how' or 'forgot it existed.' Access alone is insufficient.</p>
+<h3 style="color:#333;">Three-Part Onboarding Sequence</h3><ol><li><strong>Syllabus Day Demo (5 min):</strong> Live demo of the course AI tool. Show it answering a real question. Show it refusing graded homework. Make it memorable.</li><li><strong>Meet Your AI Tutor Assignment (Week 1):</strong> Low-stakes task using the AI tool — ask it to explain a concept, generate practice questions, or quiz on the syllabus. Submit screenshot + reflection.</li><li><strong>Quick-Start Guide:</strong> One-page reference in Moodle: how to access, 5 suggested prompts for Unit 1, what it can/cannot do, who to contact.</li></ol>
+<h2 style="color:#1A5632;">Teaching Prompt Engineering Progressively</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Phase</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Student Skill Level</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Activities</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Weeks 1–4</td><td style="padding:8px;border:1px solid #ccc;">Templates: pre-written prompts and fill-in-the-blank</td><td style="padding:8px;border:1px solid #ccc;">Quick-start guide prompts, templates, screenshot submissions</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Weeks 5–10</td><td style="padding:8px;border:1px solid #ccc;">Frameworks: RACE framework with instructor feedback</td><td style="padding:8px;border:1px solid #ccc;">RACE drills, peer review, prompt-output journals, workshops</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Weeks 11–15</td><td style="padding:8px;border:1px solid #ccc;">Independent: write prompts, evaluate critically, make professional decisions</td><td style="padding:8px;border:1px solid #ccc;">Process documentation, AI stress-testing, oral defenses, reflections</td></tr></table>
+<h2 style="color:#1A5632;">In-Class AI Activities</h2>
+<h3 style="color:#333;">The 15-Minute AI Problem-Solve</h3><p>Present a problem. Students use AI for 15 min, documenting every prompt and decision. Debrief: best answer? What strategies worked? Where did AI fail?</p>
+<h3 style="color:#333;">The Prompt Workshop</h3><p>Pairs write prompts for the same task. Run both. Compare. Class votes on best prompt and discusses why.</p>
+<h3 style="color:#333;">The AI Audit</h3><p>Show AI-generated analysis. Students find errors in 10 min. Discuss: what would a professional verify?</p>
+<h2 style="color:#1A5632;">Metacognition</h2><ul><li><strong>Post-assignment reflection:</strong> 'Did AI help you understand or just complete? What's the difference?'</li><li><strong>Chat quality self-assessment:</strong> Students rate own interactions on answer-seeking vs. concept-understanding spectrum</li><li><strong>Semester-end portfolio:</strong> Best AI interactions with commentary on what made them effective</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod6_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 6 Deliverable: Student Onboarding Sequence + In-Class Activity</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>Complete student onboarding sequence (3 components: demo plan, Week 1 assignment, quick-start guide)</li><li>One fully designed in-class AI activity with: topic, learning objective, setup/materials, student instructions, debrief questions, and assessment approach</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod6_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 6 Discussion: Onboarding Ideas</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your Week 1 onboarding assignment. What makes it effective at getting students started? What barriers do you anticipate?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod7">
+  <div class="module-header">
+    <h2>Module 7: AI Across the Curriculum — Four-Tier Playbook</h2>
+    <p class="module-subtitle">Estimated Time: 1.5 hours • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 7: AI Across the Curriculum — The Four-Tier Playbook</h2>
+<p><strong>Estimated Time:</strong> 1.5 hours</p>
+<p><strong>Focus:</strong> <em>Apply tier-specific AI integration strategies, from introductory courses through capstone</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Chung et al. (2025): Beginners benefited most (+0.215 SD, p = 0.012), experienced students saw negligible effects (+0.008 SD). This validates the tiered approach. AACSB Jan 2026 (50 schools): curricular integration outperforms technology-first approaches.</div>
+
+  </div>
+
+  <div class="content-card" id="mod7_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Tier-by-Tier Playbook & Writing AI Learning Outcomes</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Tier-by-Tier Playbook</h2>
+<h3 style="color:#333;">Tier 1: Remembering &amp; Understanding (Introductory Courses)</h3><p><strong>AI role:</strong> Guided learning tool. Students explore concepts, check understanding, generate practice.</p><ul><li>Deploy custom AI tutor with teach-don't-tell instructions</li><li>AI-generated practice problems with self-assessment</li><li>Concept exploration: ask AI, then evaluate against textbook</li></ul><p><strong>Examples:</strong> Finance (FIN320): AI tutor for TVM problems. Accounting: AI-assisted standards exploration. Marketing: AI segmentation vs. textbook frameworks.</p>
+<h3 style="color:#333;">Tier 2: Applying &amp; Analyzing (Intermediate Courses)</h3><p><strong>AI role:</strong> Analytical co-pilot with critical evaluation.</p><ul><li>AI-assisted data analysis with human verification</li><li>Comparative exercises: student work vs. AI output</li><li>Process documentation requirements</li></ul>
+<h3 style="color:#333;">Tier 3: Evaluating &amp; Creating (Advanced Courses)</h3><p><strong>AI role:</strong> Professional co-pilot. Build with AI, defend choices.</p><ul><li>AI-assisted model construction with oral defense</li><li>Professional deliverables with AI augmentation</li><li>Stress-testing against professional standards</li></ul>
+<h3 style="color:#333;">Tier 4: Synthesizing &amp; Integrating (Capstone)</h3><p><strong>AI role:</strong> Integrated workflow mirroring professional practice.</p><ul><li>End-to-end projects with AI at every stage</li><li>Professional portfolio documenting AI process</li><li>Ethical case studies: bias, disclosure, responsible use</li></ul>
+<h2 style="color:#1A5632;">Writing AI Learning Outcomes</h2>
+<div style="border-left:4px solid #1A5632;background:#F0F7F2;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong>Formula:</strong> Students will [Bloom's verb] + [AI skill] + [in discipline context] + [quality standard]<br/><br/><strong>Tier 1:</strong> 'Students will <em>use</em> AI tools to <em>explore</em> financial concepts, <em>evaluating</em> AI explanations for accuracy against course materials.'<br/><br/><strong>Tier 3:</strong> 'Students will <em>construct</em> financial models using AI augmentation, <em>defending</em> modeling choices and demonstrating professional judgment.'</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod7_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 7 Deliverable: Tier-Specific Integration Plan + Learning Outcomes</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>2-3 AI integration strategies selected with implementation sketches</li><li>2-3 AI learning outcomes drafted using the formula</li><li>Progression notes: what AI skills you expect incoming students to have and what they will leave with</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod7_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 7 Discussion: Department-Level Mapping</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your course's tier mapping and AI learning outcomes. If colleagues in your department are also in this course, discuss: How does AI skill build across your course sequence? Where are the gaps?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod8">
+  <div class="module-header">
+    <h2>Module 8: Ethics, Equity, and the Jesuit Mission</h2>
+    <p class="module-subtitle">Estimated Time: 1 hour • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 8: Ethics, Equity, and the Jesuit Mission</h2>
+<p><strong>Estimated Time:</strong> 1 hour</p>
+<p><strong>Focus:</strong> <em>Address the ethical dimensions of AI in education through the Sellinger Jesuit lens</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Chung et al. (2025): Personalized AI tutoring 'can deliver equitable learning gains without widening educational inequality' — beginners gained +0.215 SD while experienced students showed no significant change. This equity finding aligns with Sellinger's mission, but only holds when AI tools are carefully designed for inclusion.</div>
+
+  </div>
+
+  <div class="content-card" id="mod8_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Bias, Equity, Jesuit Lens, and Ethical Reasoning</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">AI Bias in Education</h2><ul><li><strong>Content bias:</strong> AI presents topics from predominantly Western, English-language perspectives.</li><li><strong>Response bias:</strong> Different quality responses depending on phrasing — disadvantages non-native speakers.</li><li><strong>Assessment bias:</strong> Better prompting skills (correlated with prior tech exposure/SES) → better AI outputs → hidden advantage.</li></ul>
+<h2 style="color:#1A5632;">Equity and Access</h2><ul><li><strong>Economic:</strong> $20/mo is significant for many students. Design for free tier.</li><li><strong>Digital fluency:</strong> Students vary widely. Onboarding (Module 6) is an equity measure.</li><li><strong>Cultural comfort:</strong> Create space for ethical/cultural concerns about AI.</li><li><strong>Disability:</strong> Test chosen tools with screen readers and assistive tech.</li></ul>
+<h2 style="color:#1A5632;">The Jesuit Lens</h2><ul><li><strong>Cura personalis:</strong> AI must serve every student, not just the tech-savvy.</li><li><strong>Discernment:</strong> Ignatian deliberation maps onto evaluating AI outputs — not accepting uncritically.</li><li><strong>Magis:</strong> AI should enable deeper understanding, not just efficiency.</li><li><strong>Responsible leadership:</strong> Graduates should use AI ethically — understanding bias, demanding transparency.</li></ul>
+<h2 style="color:#1A5632;">Teaching Ethical AI Reasoning</h2><ul><li><strong>Finance:</strong> When is AI acceptable in investment analysis? Disclosure obligations?</li><li><strong>Accounting:</strong> Who is responsible when AI makes a tax filing error?</li><li><strong>Marketing:</strong> Ethics of AI-generated ads? AI-driven consumer profiling?</li><li><strong>Management:</strong> How should leaders manage AI-driven employee displacement?</li></ul>
+<h2 style="color:#1A5632;">When NOT to Use AI</h2><ul><li>Learning objective requires independent demonstration of skills</li><li>Task requires genuine human empathy or connection</li><li>Sensitive student information could be exposed to commercial platforms</li><li>AI would undermine the assessment's ability to measure the learning outcome</li><li>Students haven't been taught to use AI effectively yet</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod8_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 8 Deliverable: AI Equity Assessment + Ethics Question</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit:</p><ul><li>Completed AI Equity Impact Assessment for your course (access audit integrated, accommodations needed)</li><li>One ethics-focused assessment question for students with grading guidance (no single correct answer — requires judgment)</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod8_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 8 Discussion: AI Ethics in Your Discipline</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your ethics-focused assessment question and the reasoning behind it. How does ethical AI use connect to Sellinger's Jesuit mission in your specific discipline?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod9">
+  <div class="module-header">
+    <h2>Module 9: Your AI Integration Plan</h2>
+    <p class="module-subtitle">Estimated Time: 1.5 hours • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 9: Your AI Integration Plan</h2>
+<p><strong>Estimated Time:</strong> 1.5 hours</p>
+<p><strong>Focus:</strong> <em>Produce a deployment-ready plan for your next semester</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>AACSB 2026: Only 12% of schools mandate AI training despite 64% of faculty having used GenAI. This module closes the gap between 'I've tried ChatGPT' and 'I have a plan for how my students will develop AI proficiency this semester.'</div>
+
+  </div>
+
+  <div class="content-card" id="mod9_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Quick Wins, Planning Template, Assessment Calendar & Community</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Quick Wins — What You Can Do This Week</h2><ul><li><strong>AI-assisted feedback drafting:</strong> Draft initial feedback on student work with AI, then personalize. Saves 30–50% of grading time.</li><li><strong>Rubric generation:</strong> AI drafts first-draft rubrics; you customize.</li><li><strong>Discussion prompts:</strong> AI generates prompts targeting different Bloom's levels.</li><li><strong>Office-hour prep:</strong> Upload common questions, pre-prepare structured explanations.</li><li><strong>Practice problems:</strong> Unlimited problems at specified difficulty levels.</li><li><strong>Lecture outlines:</strong> AI as brainstorming partner for structure and examples.</li></ul>
+<h2 style="color:#1A5632;">Integration Planning Template</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Week</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Topic</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Tier</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">AI Integration</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Student Activity</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Assessment</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">1</td><td style="padding:8px;border:1px solid #ccc;">[Your topic]</td><td style="padding:8px;border:1px solid #ccc;">[1–4]</td><td style="padding:8px;border:1px solid #ccc;">[How AI is used]</td><td style="padding:8px;border:1px solid #ccc;">[What students do]</td><td style="padding:8px;border:1px solid #ccc;">[How you assess]</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">2</td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">...</td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td><td style="padding:8px;border:1px solid #ccc;"></td></tr></table>
+<p>Not every week needs AI. A well-designed plan has AI touchpoints in 8–10 of 15 weeks.</p>
+<h2 style="color:#1A5632;">Assessment Calendar</h2><ul><li><strong>Early (Weeks 1–4):</strong> Low-stakes process documentation. Students practice AI use.</li><li><strong>Mid (Weeks 5–10):</strong> Process-based and comparative analysis assignments.</li><li><strong>Late (Weeks 11–15):</strong> Live application, professional-grade deliverables, oral defenses.</li></ul>
+<h2 style="color:#1A5632;">The Sellinger AI Faculty Community</h2><ul><li>Peer learning cohorts: semester-long groups sharing experiences</li><li>Shared template library contributed by participants</li><li>Monthly drop-in sessions: bring a challenge, get help</li><li>Conference pipeline: support for presenting AI integration work</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod9_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 9 Deliverable: Complete AI Integration Plan</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit your complete AI Integration Plan for one course:</p><ul><li>Week-by-week integration map</li><li>AI-use policy statement (from Module 3)</li><li>Student onboarding materials (from Module 6)</li><li>Assessment calendar showing AI-enhanced assessment progression</li><li>3 quick wins already implemented (with evidence)</li><li>Accountability partner identified</li></ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod9_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 9 Discussion: Boldest Integration Idea</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share your boldest AI integration idea and one quick win you've already implemented. What's your biggest remaining concern about implementing your plan?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="mod10">
+  <div class="module-header">
+    <h2>Module 10: Building AI-Powered Data Access Tools</h2>
+    <p class="module-subtitle">Estimated Time: 2 hours • 2 Pages + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Module 10: Building AI-Powered Data Access Tools</h2>
+<p><strong>Estimated Time:</strong> 2 hours</p>
+<p><strong>Focus:</strong> <em>Replace expensive data platforms with free API-powered dashboards built with AI assistance</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Business schools spend $15,000–$30,000/year on Bloomberg terminals, $20,000+ on Capital IQ, and similar amounts on Statista, Westlaw, and other data platforms. Using free APIs and AI-generated code, faculty can build functional alternatives that give students hands-on experience with real data — while teaching them professional-grade technical skills.</div>
+
+  </div>
+
+  <div class="content-card" id="mod10_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">The $100,000 Problem & The Cherubini Terminal</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Part 1: The $100,000 Problem</h2>
+<p>Most business schools maintain expensive data subscriptions that students can only access in specific labs during specific hours. This creates three problems:</p>
+<ul><li><strong>Access inequality:</strong> Students can't use these tools outside the lab or after graduation</li><li><strong>Pedagogical dependency:</strong> Students learn a vendor's interface, not the underlying analytical skills</li><li><strong>Cost escalation:</strong> Licenses increase 5–15% annually with no alternative</li></ul>
+<h2 style="color:#1A5632;">Expensive Tools Across Business Disciplines</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Discipline</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Expensive Tool</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Annual Cost</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Free API Alternative</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Finance</td><td style="padding:8px;border:1px solid #ccc;">Bloomberg Terminal</td><td style="padding:8px;border:1px solid #ccc;">$24,000/seat</td><td style="padding:8px;border:1px solid #ccc;">Finnhub, Alpha Vantage, Yahoo Finance</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Finance</td><td style="padding:8px;border:1px solid #ccc;">Capital IQ (S&amp;P)</td><td style="padding:8px;border:1px solid #ccc;">$20,000+</td><td style="padding:8px;border:1px solid #ccc;">Financial Modeling Prep, SEC EDGAR</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Marketing</td><td style="padding:8px;border:1px solid #ccc;">Statista / Mintel</td><td style="padding:8px;border:1px solid #ccc;">$5,000–$15,000</td><td style="padding:8px;border:1px solid #ccc;">Google Trends, Census Bureau, BLS</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Legal</td><td style="padding:8px;border:1px solid #ccc;">Westlaw / LexisNexis</td><td style="padding:8px;border:1px solid #ccc;">$5,000–$12,000</td><td style="padding:8px;border:1px solid #ccc;">CourtListener, Google Scholar Legal</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Economics</td><td style="padding:8px;border:1px solid #ccc;">Haver Analytics</td><td style="padding:8px;border:1px solid #ccc;">$15,000+</td><td style="padding:8px;border:1px solid #ccc;">FRED (St. Louis Fed), World Bank API</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">Operations</td><td style="padding:8px;border:1px solid #ccc;">Gartner / IBISWorld</td><td style="padding:8px;border:1px solid #ccc;">$10,000–$30,000</td><td style="padding:8px;border:1px solid #ccc;">Census Business Data, USDA APIs</td></tr></table>
+<h2 style="color:#1A5632;">Part 2: Worked Example — The Cherubini Terminal</h2>
+<p>In this course, we built a complete Bloomberg-style financial analysis terminal using only:</p>
+<ul><li>A free Finnhub API key (60 calls/minute)</li><li>An optional Financial Modeling Prep key (250 calls/day)</li><li>AI (Claude) to generate the code</li><li>A single HTML file — no server, no installation, no cost</li></ul>
+<p>The result: a 10-module financial analysis dashboard covering stock screening, technical analysis, risk assessment, earnings analysis, dividend modeling, sector analysis, quantitative signals, ETF/portfolio tools, macro indicators, and DCF valuation.</p>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>The bloomberg_terminal.html file is available in this course. Download it, get a free Finnhub API key at finnhub.io, and try it yourself before assigning it to students.</div>
+<h2 style="color:#1A5632;">The Four-Step Framework: Map → Source → Build → Deploy</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Step</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What You Do</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Example</th></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">1. Map</td><td style="padding:8px;border:1px solid #ccc;">Identify the analyses your expensive tool provides</td><td style="padding:8px;border:1px solid #ccc;">Bloomberg: stock quotes, financials, earnings, news</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">2. Source</td><td style="padding:8px;border:1px solid #ccc;">Find free APIs that provide the same data</td><td style="padding:8px;border:1px solid #ccc;">Finnhub API: quotes, profiles, earnings, recommendations</td></tr><tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">3. Build</td><td style="padding:8px;border:1px solid #ccc;">Use AI to generate the dashboard code</td><td style="padding:8px;border:1px solid #ccc;">Claude generates HTML/JS with API calls and Chart.js visualizations</td></tr><tr><td style="padding:8px;border:1px solid #ccc;">4. Deploy</td><td style="padding:8px;border:1px solid #ccc;">Host for free on GitHub Pages or similar</td><td style="padding:8px;border:1px solid #ccc;">Push index.html to GitHub repo → enable Pages → share URL</td></tr></table>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod10_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Discipline-Specific Projects & Hands-On Activities</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Discipline-Specific Project Ideas</h2>
+<h3 style="color:#333;">1. Marketing: Consumer Sentiment Dashboard</h3><p>Replace Statista with a dashboard using Google Trends API, Reddit API, and Twitter/X API to track brand sentiment, search trends, and competitive mentions in real time.</p>
+<h3 style="color:#333;">2. Economics: Macro Indicator Dashboard</h3><p>Replace Haver Analytics with a FRED-powered dashboard showing GDP, unemployment, CPI, interest rates, and yield curves with historical comparisons and recession indicators.</p>
+<h3 style="color:#333;">3. Accounting: SEC Filing Analyzer</h3><p>Replace Capital IQ's filing tools with an SEC EDGAR-powered dashboard that pulls 10-K and 10-Q filings, extracts financial statements, and runs automated ratio analysis.</p>
+<h3 style="color:#333;">4. Legal: Case Law Research Tool</h3><p>Replace Westlaw with a CourtListener-powered search tool that finds relevant cases, tracks citation networks, and summarizes holdings.</p>
+<h3 style="color:#333;">5. Supply Chain: Logistics Tracker</h3><p>Replace Gartner's supply chain tools with APIs from shipping companies, commodity exchanges, and the Census Bureau to build a supply chain health dashboard.</p>
+<h3 style="color:#333;">6. Healthcare Admin: Public Health Dashboard</h3><p>Replace expensive health data subscriptions with CDC, CMS, and WHO APIs to track disease trends, hospital metrics, and population health indicators.</p>
+<h2 style="color:#1A5632;">Hands-On Activities</h2>
+<h3 style="color:#333;">Activity 10.1: Explore the Cherubini Terminal</h3><p>Open the Bloomberg-style terminal (bloomberg_terminal.html). Enter a Finnhub API key. Look up 3 stocks. For each, review the Overview, Earnings, and Risk tabs. Write a 1-paragraph reflection: What analysis is possible? What's missing compared to a real Bloomberg terminal? What's the pedagogical value?</p>
+<h3 style="color:#333;">Activity 10.2: Design Your Dashboard</h3><p>Using the four-step framework (Map → Source → Build → Deploy), design (but don't build yet) a data dashboard for your discipline. Document: (1) What expensive tool it replaces, (2) What analyses it provides, (3) What free APIs it uses, (4) What it would look like.</p>
+<h3 style="color:#333;">Activity 10.3: Peer Review</h3><p>Exchange dashboard designs with a colleague from a different discipline. Provide feedback on: feasibility, pedagogical value, student learning outcomes, and deployment plan.</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod10_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Module 10 Deliverable: AI-Powered Data Tool Proposal</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Submit a 2-page AI-Powered Data Tool Proposal containing:</p>
+<ul><li><strong>The Problem:</strong> What expensive tool does this replace? What does it cost? What analyses does it enable?</li><li><strong>The Solution:</strong> What free APIs will you use? What will the dashboard look like? Include a mockup or wireframe.</li><li><strong>The Pedagogy:</strong> How will students use this tool? What learning outcomes does it support? How does building (not just using) the tool develop professional skills?</li><li><strong>The Plan:</strong> Implementation timeline, technical requirements, deployment strategy (GitHub Pages, Moodle, etc.)</li></ul>
+<p><strong>Stretch Goal:</strong> Actually build a working prototype using AI to generate the code, and include the link in your proposal.</p>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="mod10_act4">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Module 10 Discussion: What Would You Replace?</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>If you could replace one expensive data tool in your discipline with a free, AI-built alternative, what would it be? What analyses would your students gain access to? Share your proposal and discuss: Is the free version "good enough" for pedagogical purposes, or are there analyses where only the expensive tool will do?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="appA">
+  <div class="module-header">
+    <h2>Appendix A: Setting Up Claude Cowork for Faculty Work</h2>
+    <p class="module-subtitle">A step-by-step guide for downloading, configuring, and using Claude's Cowork mode to automate faculty workflows • 1 Page + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Appendix A: Setting Up Claude Cowork for Faculty Work</h2>
+<p><strong>Estimated Time:</strong> 1 hour</p>
+<p><strong>Focus:</strong> <em>Download and configure Claude's desktop Cowork mode — an AI assistant that can autonomously execute multi-step tasks on your computer: creating documents, organizing files, conducting research, and automating repetitive workflows</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Why This Matters</strong><br/>Unlike chat-based AI (where you go back and forth one message at a time), Cowork lets you describe an outcome — "Create a rubric for this assignment," "Organize these files," "Build a presentation from these notes" — then step away and come back to finished work. It is the difference between having a chatbot and having a research assistant.</div>
+
+  </div>
+
+  <div class="content-card" id="appA_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Claude Cowork: Download, Setup & Faculty Workflows</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">What Is Claude Cowork?</h2>
+<p>Cowork is a mode within the Claude desktop app that transforms Claude from a chatbot into an autonomous task executor. Instead of responding to prompts one at a time, Claude can take on complex, multi-step tasks — creating formatted documents, organizing files, conducting web research, building spreadsheets, analyzing data — and execute them on your behalf while you do other work.</p>
+<p>Think of it as the difference between texting someone instructions step by step versus handing a capable assistant a project brief and getting back finished work.</p>
+<h2 style="color:#1A5632;">Step 1: Download Claude Desktop</h2>
+<ol>
+<li>Go to <strong><a href="https://claude.com/download">claude.com/download</a></strong></li>
+<li>Download the version for your operating system (macOS or Windows)</li>
+<li>Install and open the app</li>
+<li>Sign in with your Claude account (Pro, Max, Team, or Enterprise plan required)</li>
+</ol>
+<div style="border-left:4px solid #E65100;background:#FFF3E0;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#E65100;">Important</strong><br/>Cowork requires a paid Claude plan: Pro ($20/mo), Max ($100/mo), Team ($30/user/mo), or Enterprise. The free tier does not include Cowork. If your institution provides Team or Enterprise access, check with IT.</div>
+<h2 style="color:#1A5632;">Step 2: Switch to Cowork Mode</h2>
+<ol>
+<li>Open Claude Desktop</li>
+<li>Look for the mode selector at the top of the interface — you will see <strong>Chat</strong> and <strong>Cowork</strong> tabs</li>
+<li>Click <strong>Cowork</strong> to switch to task mode</li>
+<li>You are now in Cowork — describe a task, and Claude will plan and execute it autonomously</li>
+</ol>
+<h2 style="color:#1A5632;">Step 3: Select a Working Folder</h2>
+<p>Cowork works best when you give it access to files on your computer:</p>
+<ol>
+<li>When starting a task, Cowork will ask if you want to select a folder</li>
+<li>Choose a folder containing the files you want Claude to work with (e.g., your course materials folder)</li>
+<li>Claude can now read, create, and organize files in that folder</li>
+</ol>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>Create a dedicated folder for each course or project. Example: <code>Documents/Sellinger/FIN320-AI-Materials/</code>. This keeps your work organized and gives Claude clear context.</div>
+<h2 style="color:#1A5632;">Step 4: Configure Global Instructions</h2>
+<p>You can give Claude standing instructions that apply to every Cowork session:</p>
+<ol>
+<li>Go to <strong>Settings → Cowork</strong></li>
+<li>Click <strong>Edit</strong> next to "Global instructions"</li>
+<li>Add instructions about your preferences</li>
+</ol>
+<p><strong>Example global instructions for Sellinger faculty:</strong></p>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:.85rem;">
+I am a faculty member at Loyola University Maryland, Sellinger School of Business.<br/>
+When creating documents, use Loyola green (#1A5632) as the primary color.<br/>
+Use professional, academic tone unless I specify otherwise.<br/>
+When creating course materials, follow Moodle formatting conventions.<br/>
+Save all final outputs as .docx unless I specify another format.<br/>
+Always include learning objectives when creating instructional content.
+</div>
+<h2 style="color:#1A5632;">What Can Cowork Do for Faculty?</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Task Category</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Example Prompts</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What Claude Does</th></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Document Creation</strong></td><td style="padding:8px;border:1px solid #ccc;">"Create a syllabus for my FIN320 course based on this outline"</td><td style="padding:8px;border:1px solid #ccc;">Generates a formatted .docx with all sections, tables, policies, and calendar</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Grading Support</strong></td><td style="padding:8px;border:1px solid #ccc;">"Create a detailed rubric for this case analysis assignment"</td><td style="padding:8px;border:1px solid #ccc;">Builds a rubric with criteria, point allocations, and performance descriptors</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Presentation Building</strong></td><td style="padding:8px;border:1px solid #ccc;">"Turn these lecture notes into a 20-slide PowerPoint"</td><td style="padding:8px;border:1px solid #ccc;">Creates a .pptx with formatted slides, speaker notes, and consistent design</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Research Assistance</strong></td><td style="padding:8px;border:1px solid #ccc;">"Research the latest studies on AI in accounting education and create a summary"</td><td style="padding:8px;border:1px solid #ccc;">Searches the web, synthesizes findings, produces a formatted research brief</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Data Analysis</strong></td><td style="padding:8px;border:1px solid #ccc;">"Analyze this student survey data and create visualizations"</td><td style="padding:8px;border:1px solid #ccc;">Reads your CSV/Excel file, runs analysis, creates charts and a summary report</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Course Material Updates</strong></td><td style="padding:8px;border:1px solid #ccc;">"Update all dates in my syllabus from Fall 2025 to Fall 2026"</td><td style="padding:8px;border:1px solid #ccc;">Opens the file, makes all changes, saves the updated version</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>File Organization</strong></td><td style="padding:8px;border:1px solid #ccc;">"Organize the files in this folder by course and semester"</td><td style="padding:8px;border:1px solid #ccc;">Creates subfolders, moves files, renames for consistency</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Assessment Design</strong></td><td style="padding:8px;border:1px solid #ccc;">"Create a 50-question exam from Chapters 5–8 of this textbook outline"</td><td style="padding:8px;border:1px solid #ccc;">Generates questions across Bloom's levels with answer key</td></tr>
+</table>
+<h2 style="color:#1A5632;">The Cowork Workflow</h2>
+<ol>
+<li><strong>Describe the outcome</strong> — Be specific. "Create a presentation about bonds" is weak. "Create a 15-slide PowerPoint for my FIN320 class on bond pricing, including one worked example with a $1,000 par bond, 5% coupon, 3% market rate. Use Loyola green. Include speaker notes." is excellent.</li>
+<li><strong>Review Claude's plan</strong> — Claude will show you what it intends to do before executing. You can redirect at this stage.</li>
+<li><strong>Let it run</strong> — Claude executes the task autonomously. You can watch progress or step away.</li>
+<li><strong>Review and iterate</strong> — Check the output. Ask for revisions: "Make the font larger on slides 3–7" or "Add a section on duration to slide 12."</li>
+</ol>
+<div style="border-left:4px solid #1A5632;background:#F0F7F2;padding:12px 16px;margin:12px 0;border-radius:4px;">Your computer must stay awake and Claude Desktop must remain open while Claude is working. If you close the app, the session ends. For long tasks, adjust your sleep settings.</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appA_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Cowork Power Features: Projects, Plugins & Scheduled Tasks</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Projects: Persistent Workspaces</h2>
+<p>Projects let you organize related tasks into dedicated workspaces with their own files, context, instructions, and memory:</p>
+<ul>
+<li><strong>Create a project:</strong> Click "New Project" in Cowork. Choose "Start from scratch" or "Use an existing folder."</li>
+<li><strong>Add instructions:</strong> Project-specific context (e.g., "This project is for my FIN322 Financial Statement Analysis course. Always use 2024 10-K data.")</li>
+<li><strong>Add context:</strong> Link a local folder, paste URLs, or attach files that Claude should reference</li>
+<li><strong>Memory:</strong> Claude remembers context from your previous work within the project — it learns your preferences over time</li>
+</ul>
+<p><strong>Recommended project setup for faculty:</strong></p>
+<ul>
+<li>One project per course (e.g., "FIN320 Fall 2026")</li>
+<li>Link the course's file folder as context</li>
+<li>Add instructions about your teaching style, textbook, and student audience</li>
+</ul>
+<h2 style="color:#1A5632;">Plugins: Specialized Capabilities</h2>
+<p>Plugins extend what Cowork can do. Once installed, they activate automatically when relevant:</p>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Plugin Category</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What It Does</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Faculty Use Case</th></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Finance</td><td style="padding:8px;border:1px solid #ccc;">Financial statements, variance analysis, journal entries</td><td style="padding:8px;border:1px solid #ccc;">Generate income statements, prepare teaching examples</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;">Data Analysis</td><td style="padding:8px;border:1px solid #ccc;">Statistical analysis, dashboards, SQL queries</td><td style="padding:8px;border:1px solid #ccc;">Analyze student data, build interactive visualizations</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;">Marketing</td><td style="padding:8px;border:1px solid #ccc;">Campaign planning, competitive analysis, content drafting</td><td style="padding:8px;border:1px solid #ccc;">Create teaching case studies with real market data</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;">Legal</td><td style="padding:8px;border:1px solid #ccc;">Contract review, NDA triage, compliance checks</td><td style="padding:8px;border:1px solid #ccc;">Generate sample contracts for Business Law exercises</td></tr>
+</table>
+<p>To install plugins: Use the slash command <code>/</code> menu in Cowork, or go to <strong>Settings → Extensions</strong> to browse available plugins.</p>
+<h2 style="color:#1A5632;">Connectors: Integrating External Tools</h2>
+<p>Connectors link Claude to external services you already use:</p>
+<ul>
+<li><strong>Google Workspace:</strong> Google Calendar, Google Drive, Gmail — schedule office hours, organize Drive files, draft emails</li>
+<li><strong>Notion:</strong> Create and update databases, pages, and project boards</li>
+<li><strong>Other connectors:</strong> New connectors are added regularly. Check Settings → Extensions for the current list.</li>
+</ul>
+<p>To enable connectors: <strong>Settings → Extensions → Browse extensions</strong> → click on the connector → follow the authentication prompts.</p>
+<h2 style="color:#1A5632;">Scheduled Tasks: Automate Recurring Work</h2>
+<p>Cowork can run tasks on a schedule — something regular chat cannot do:</p>
+<ul>
+<li><strong>"Every Monday morning, check my FIN320 folder for new student submissions and create a summary"</strong></li>
+<li><strong>"Every Friday, search for new papers on AI in finance education and add them to my research notes"</strong></li>
+<li><strong>"At the start of each month, update the dates in my course calendar document"</strong></li>
+</ul>
+<p>To create: Type your task with the schedule, or use the <code>/schedule</code> command. Claude will confirm the schedule and execute automatically.</p>
+<h2 style="color:#1A5632;">Computer Use (Advanced)</h2>
+<p>For Pro and Max plans, Cowork can interact directly with your screen — clicking, typing, and navigating desktop applications. This is useful for tasks that require interacting with software that doesn't have a plugin (e.g., navigating Moodle's web interface, filling in forms, taking screenshots for documentation).</p>
+<p>To enable: <strong>Settings → Desktop app → Computer use</strong>. Claude will ask permission before taking actions on your screen.</p>
+<div style="border-left:4px solid #E65100;background:#FFF3E0;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#E65100;">Important</strong><br/>Computer use is a research preview. Always review what Claude is doing on your screen. Never enable computer use when sensitive information (grades, student records, passwords) is visible.</div>
+<h2 style="color:#1A5632;">Best Practices for Faculty</h2>
+<ul>
+<li><strong>Be specific:</strong> The more detail you give, the better the output. Include format, audience, length, and quality expectations.</li>
+<li><strong>Use projects:</strong> Set up one per course. The memory feature means Claude gets better at your specific needs over time.</li>
+<li><strong>Iterate, don't restart:</strong> If the first output isn't right, tell Claude what to change. It retains context within a session.</li>
+<li><strong>Check the output:</strong> AI is a capable assistant, not an infallible one. Review everything before distributing to students.</li>
+<li><strong>Start small:</strong> Begin with a document you would have created anyway. Compare the time investment.</li>
+</ul>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appA_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Appendix A Deliverable: Cowork Test Drive</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Complete the following setup and test tasks:</p>
+<ol>
+<li><strong>Install and configure:</strong> Download Claude Desktop, switch to Cowork mode, set your global instructions, and create a project for one of your courses.</li>
+<li><strong>Complete 3 test tasks</strong> in Cowork. Choose from: create a document (syllabus section, rubric, assignment instructions), build a presentation (lecture slides with speaker notes), analyze data (student survey results, grade distributions), or organize files (rename, sort, restructure a course folder).</li>
+<li><strong>Submit a reflection</strong> (1 page) documenting: What tasks did you try? How long did each take vs. doing it manually? What worked well? What required correction? Would you use Cowork regularly? Why or why not?</li>
+</ol>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appA_act4">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Appendix A Discussion: Cowork Workflows</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share one task you completed using Cowork and the prompt you used. What was the quality of the output? How much editing did it need? If you could automate one recurring faculty task with Cowork's scheduled tasks feature, what would it be?</p>
+
+    </div>
+  </div>
+</div>
+
+<div class="module-section" id="appB">
+  <div class="module-header">
+    <h2>Appendix B: Using Claude for Academic Research</h2>
+    <p class="module-subtitle">A full walkthrough: replicate one of your own published papers using Claude to understand AI's research capabilities and limitations • 3 Pages + 1 Assignment + 1 Forum</p>
+  </div>
+
+  <div class="content-block section-block">
+    
+<h2 style="color:#1A5632;">Appendix B: Using Claude for Academic Research</h2>
+<p><strong>Estimated Time:</strong> 2–3 hours</p>
+<p><strong>Focus:</strong> <em>Understand AI's capabilities and limitations for academic research by attempting to replicate one of your own published papers — then critically evaluating where AI excels, where it fails, and what this means for the future of scholarly work in your discipline</em></p>
+<div style="border-left:4px solid #8D6E63;background:#F5F0E8;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#8D6E63;">Evidence</strong><br/>Andy Hall (Stanford, 2025) demonstrated that Claude Code could replicate and extend an empirical political science paper in approximately one hour — downloading the original repo, translating Stata to Python, scraping updated data, running new analyses, performing a literature review, and writing a wholly new paper. The audit found no hallucinations or fabricated results, but identified cases where the AI "drifted from the prompt" and produced "poorly conceived" analytical extensions. The conclusion: AI is extremely powerful for updating well-contained empirical work, but absolutely requires expert oversight.</div>
+
+  </div>
+
+  <div class="content-card" id="appB_act1">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Why Replication? The Andy Hall Experiment</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Why Replicate Your Own Paper?</h2>
+<p>The best way to understand what AI can and cannot do for research is to test it on something where <em>you</em> are the world's leading expert: your own published work. You know every methodological choice, every data limitation, every reviewer objection. This means you can evaluate AI's output with a precision that is impossible when working on unfamiliar material.</p>
+<p>This exercise produces three outcomes:</p>
+<ul>
+<li><strong>You learn AI's research capabilities firsthand</strong> — not from reading about it, but from watching it attempt your actual methodology</li>
+<li><strong>You discover the failure modes</strong> — where AI hallucinates citations, misapplies methods, or makes subtle analytical errors that only a domain expert would catch</li>
+<li><strong>You can credibly advise students</strong> — because you have direct experience with what AI does well and poorly in your specific field</li>
+</ul>
+<h2 style="color:#1A5632;">The Andy Hall Experiment: What Happened</h2>
+<p>In 2025, Andy Hall (Stanford political scientist) tasked Claude with replicating and extending one of his published papers on the effect of universal vote-by-mail. Here is exactly what Claude did, autonomously:</p>
+<ol>
+<li><strong>Downloaded the original paper's replication repository</strong> from GitHub</li>
+<li><strong>Replicated the original results</strong> — translating the original Stata code into Python</li>
+<li><strong>Crawled the web</strong> for updated official election data and Census data through 2024</li>
+<li><strong>Ran new analyses</strong> extending the original results with the updated data</li>
+<li><strong>Created new tables and figures</strong> matching the paper's formatting conventions</li>
+<li><strong>Performed a literature review</strong> of recent related work</li>
+<li><strong>Wrote a wholly new paper</strong> incorporating all of the above</li>
+<li><strong>Pushed everything to a new GitHub repository</strong></li>
+</ol>
+<p><strong>Total time: approximately one hour.</strong></p>
+<h2 style="color:#1A5632;">What the Audit Found</h2>
+<p>Hall then had a colleague (Graham Straus) rigorously audit the AI-produced paper:</p>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What AI Did Well</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What AI Got Wrong</th></tr>
+<tr style="background:#EFF6F1;">
+<td style="padding:8px;border:1px solid #ccc;">
+<ul style="margin:4px 0 4px 16px;"><li>No hallucinated data or fabricated results</li><li>Successfully replicated the core findings</li><li>Competent code translation (Stata → Python)</li><li>Reasonable data collection from web sources</li><li>Properly formatted tables and figures</li><li>Coherent paper structure and writing</li></ul>
+</td>
+<td style="padding:8px;border:1px solid #ccc;">
+<ul style="margin:4px 0 4px 16px;"><li>"Drifted from the prompt" — made analytical choices not requested</li><li>Some extensions were "poorly conceived" — technically valid but methodologically questionable</li><li>Lacked understanding of why certain analytical choices matter in the discipline</li><li>Literature review was adequate but not expert-level</li><li>Required human judgment to evaluate which extensions were worth keeping</li></ul>
+</td></tr></table>
+<div style="border-left:4px solid #1A5632;background:#F0F7F2;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong>The key insight:</strong> AI is already an extremely powerful research accelerator for well-defined empirical work. But it absolutely needs guidance and oversight from human experts who understand the methodological standards and norms of their discipline. The AI does the heavy lifting; the scholar provides the judgment.</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appB_act2">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Step-by-Step: Replicating Your Own Paper with Claude</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Before You Begin: Choose Your Paper</h2>
+<p>Select one of your published papers for this exercise. The best candidates:</p>
+<ul>
+<li><strong>Empirical papers</strong> with clearly defined methodology (regression analysis, survey analysis, case study with structured framework)</li>
+<li><strong>Papers with available data</strong> — either publicly available datasets or data you can share with Claude</li>
+<li><strong>Papers you know deeply</strong> — you need to be able to evaluate whether AI's replication is accurate</li>
+</ul>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>If your research is qualitative, theoretical, or uses proprietary data, you can still do this exercise. Give Claude the paper and ask it to: reproduce the literature review, replicate the theoretical framework, or generate the methodology section from your research questions. The evaluation is equally valuable.</div>
+<h2 style="color:#1A5632;">Phase 1: Preparation (15 minutes)</h2>
+<h3 style="color:#333;">Gather Your Materials</h3>
+<ul>
+<li>Your published paper (PDF)</li>
+<li>The dataset used (if applicable and shareable)</li>
+<li>Any supplementary materials, code, or appendices</li>
+<li>Your notes on methodology choices (optional but helpful for evaluation)</li>
+</ul>
+<h3 style="color:#333;">Create a Cowork Project</h3>
+<ol>
+<li>Open Claude Desktop → Cowork mode</li>
+<li>Create a new project: "Research Replication Test"</li>
+<li>Select a folder for the project files</li>
+<li>Upload your paper and data files</li>
+</ol>
+<h2 style="color:#1A5632;">Phase 2: The Literature Review Test (30 minutes)</h2>
+<p>Start with the component AI handles best — and where errors are most detectable:</p>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:.85rem;">
+<strong>Prompt:</strong><br/><br/>
+I am uploading one of my published papers. I want you to attempt to replicate the literature review section.<br/><br/>
+1. Read my paper carefully.<br/>
+2. Identify the key themes, debates, and sources referenced in my literature review.<br/>
+3. Using Claude's Research feature, search for the actual papers I cited. Verify they exist and that I characterized them accurately.<br/>
+4. Write a new literature review covering the same themes, citing the same key works plus any significant new papers published since mine.<br/>
+5. Create a comparison document showing: (a) themes I covered vs. themes you covered, (b) sources I cited vs. sources you found, (c) any citations I included that you cannot verify, (d) any important works I missed.<br/><br/>
+Save as a Word document.
+</div>
+<h3 style="color:#333;">Evaluate</h3>
+<ul>
+<li>Did Claude find your actual cited sources, or did it hallucinate similar-sounding ones?</li>
+<li>Did it accurately characterize the debates in your field?</li>
+<li>Did it identify any papers you genuinely missed?</li>
+<li>How does the writing quality compare to yours?</li>
+</ul>
+<h2 style="color:#1A5632;">Phase 3: The Methodology Replication (45 minutes)</h2>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:.85rem;">
+<strong>Prompt:</strong><br/><br/>
+Now attempt to replicate my methodology.<br/><br/>
+1. From the paper, identify: research questions, hypotheses, data sources, variables, analytical methods, and robustness checks.<br/>
+2. If I've provided data: load the dataset, replicate the key analyses, and produce tables/figures matching my originals.<br/>
+3. If no data: write the complete methodology section from scratch based only on the paper's description, including any code you would use to implement it.<br/>
+4. Document every methodological choice you make and flag any place where the paper's description was ambiguous.<br/><br/>
+CRITICAL: When you run any code, immediately test it. Do not claim results without showing the actual output. If something fails, fix it yourself before reporting.
+</div>
+<h3 style="color:#333;">Evaluate</h3>
+<ul>
+<li>Did Claude correctly identify your methodology?</li>
+<li>If it ran the analysis: did the results match? Where did they diverge?</li>
+<li>Did it flag the right ambiguities — the places where your paper left methodological details implicit?</li>
+<li>Would a reviewer accept Claude's methodology section as technically accurate?</li>
+</ul>
+<h2 style="color:#1A5632;">Phase 4: The Extension Test (30 minutes)</h2>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:.85rem;">
+<strong>Prompt:</strong><br/><br/>
+Based on your understanding of my paper, propose and execute one meaningful extension:<br/><br/>
+1. Identify a limitation I acknowledged or a natural next step.<br/>
+2. Propose a specific extension with justification.<br/>
+3. Execute it (if data permits) or outline the complete methodology.<br/>
+4. Discuss whether the extension confirms, contradicts, or nuances my original findings.<br/><br/>
+Be explicit about the assumptions you are making and why.
+</div>
+<h3 style="color:#333;">Evaluate</h3>
+<p>This is the most revealing test. AI can competently replicate existing work, but <em>extending</em> research requires the kind of disciplinary judgment that separates good research from mere data analysis. Ask yourself:</p>
+<ul>
+<li>Is the proposed extension meaningful, or is it technically valid but intellectually empty?</li>
+<li>Does Claude understand <em>why</em> certain extensions matter in your field?</li>
+<li>Would you be comfortable submitting this extension to a journal?</li>
+</ul>
+<h2 style="color:#1A5632;">Phase 5: The Critical Comparison (15 minutes)</h2>
+<div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0;font-family:monospace;font-size:.85rem;">
+<strong>Prompt:</strong><br/><br/>
+Create a final assessment document comparing your replication to my original paper:<br/><br/>
+1. What did you replicate accurately?<br/>
+2. Where did your version diverge from the original?<br/>
+3. What errors did you make that only a domain expert would catch?<br/>
+4. What are the three most important limitations of using AI for this type of research?<br/>
+5. Honestly assess: could this AI-generated replication pass peer review in its current form?<br/><br/>
+Be ruthlessly honest. I am evaluating your self-awareness, not your confidence.
+</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appB_act3">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #1565C0;">
+      <span class="card-icon">📖</span>
+      <span class="card-title">Beyond Replication: Claude Research Workflows for Faculty</span>
+      <span class="card-type" style="color:#1565C0;">PAGE</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h2 style="color:#1A5632;">Claude's Research Feature</h2>
+<p>Claude includes a built-in Research mode (available on Pro, Max, Team, and Enterprise plans) that conducts multi-step web research autonomously:</p>
+<ul>
+<li><strong>How to enable:</strong> In any Claude conversation, click the Settings icon → Research Mode → select Standard, Enhanced, or Deep Research</li>
+<li><strong>What it does:</strong> Claude conducts multiple searches that build on each other, explores different angles of your question, and produces structured, citation-dense output</li>
+<li><strong>Research depth slider:</strong> Choose from Focused (quick scan) to Comprehensive (thorough investigation)</li>
+<li><strong>Output formats:</strong> Summary, Detailed Analysis, or Research Report</li>
+</ul>
+<h2 style="color:#1A5632;">Research Workflows That Work Well</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Workflow</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">How to Use Claude</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Quality Level</th></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Literature Scanning</strong></td><td style="padding:8px;border:1px solid #ccc;">Use Research mode: "Find all papers published since 2023 on [topic]. For each, provide: citation, methodology, key finding, and relevance to [your research question]."</td><td style="padding:8px;border:1px solid #ccc;">Good for initial scoping. Always verify citations exist — Claude may hallucinate plausible-sounding papers.</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Methodology Design</strong></td><td style="padding:8px;border:1px solid #ccc;">Upload your research proposal. Ask: "Critique my methodology. What are the threats to validity? What robustness checks should I include? What would Reviewer 2 complain about?"</td><td style="padding:8px;border:1px solid #ccc;">Excellent. Claude is strong at identifying standard methodological concerns. Not a substitute for disciplinary expertise.</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Data Analysis</strong></td><td style="padding:8px;border:1px solid #ccc;">Upload data in Cowork. Ask: "Run [specific analysis]. Produce tables formatted for [target journal]. Include all standard robustness checks."</td><td style="padding:8px;border:1px solid #ccc;">Good for execution. Always verify code logic and results. Claude can run R, Python, and Stata-style analyses.</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Writing First Drafts</strong></td><td style="padding:8px;border:1px solid #ccc;">Upload your outline, data, and results. Ask: "Write a draft of the Results section. Follow [target journal] conventions. Include in-text citations in APA format."</td><td style="padding:8px;border:1px solid #ccc;">Good starting point. The draft will need substantial revision for voice, precision, and disciplinary conventions.</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Responding to Reviewers</strong></td><td style="padding:8px;border:1px solid #ccc;">Upload the paper + reviewer comments. Ask: "For each reviewer comment, draft a response and identify what changes are needed in the manuscript."</td><td style="padding:8px;border:1px solid #ccc;">Excellent for organizing responses. Review carefully — Claude may concede points you should push back on.</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Grant Writing</strong></td><td style="padding:8px;border:1px solid #ccc;">Upload the RFP and your research plan. Ask: "Draft the proposal following [funder's] guidelines. Emphasize: significance, innovation, and approach."</td><td style="padding:8px;border:1px solid #ccc;">Good for structure and compliance. Will need your voice and specific institutional details.</td></tr>
+</table>
+<h2 style="color:#1A5632;">Research Workflows Where AI Falls Short</h2>
+<ul>
+<li><strong>Genuine theoretical innovation:</strong> AI can synthesize existing theories, but creating new theoretical frameworks requires human creativity and disciplinary intuition</li>
+<li><strong>Contextual judgment:</strong> Understanding why a particular finding matters, what it means for policy, or how it connects to ongoing debates in your field</li>
+<li><strong>Ethical research decisions:</strong> IRB considerations, participant welfare, data sensitivity — these require human judgment</li>
+<li><strong>Citation accuracy:</strong> Always verify that cited papers actually exist and say what Claude claims they say. This is non-negotiable.</li>
+<li><strong>Disciplinary norms:</strong> Every field has unwritten rules about what constitutes "good" research. AI learns the explicit conventions but misses the implicit ones.</li>
+</ul>
+<h2 style="color:#1A5632;">The Responsible Use Framework for AI in Research</h2>
+<table style="width:100%;border-collapse:collapse;"><tr><th style="background:#1A5632;color:white;padding:8px;text-align:left;">Principle</th><th style="background:#1A5632;color:white;padding:8px;text-align:left;">What It Means</th></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Transparency</strong></td><td style="padding:8px;border:1px solid #ccc;">Disclose AI use in your methodology section. Major journals (Nature, Science, AACSB-affiliated journals) now require this. Example: "The authors used Claude as a research and writing assistant in preparing this manuscript. All interpretations, conclusions, and any errors remain solely the responsibility of the authors."</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Verification</strong></td><td style="padding:8px;border:1px solid #ccc;">Every AI-generated claim, citation, and analysis must be independently verified by the researcher. AI output is a draft, not a final product.</td></tr>
+<tr style="background:#EFF6F1;"><td style="padding:8px;border:1px solid #ccc;"><strong>Intellectual Ownership</strong></td><td style="padding:8px;border:1px solid #ccc;">AI cannot be listed as an author. The researcher is responsible for all content. Using AI to generate text you present as your own analysis without disclosure is a form of academic dishonesty — the same standard we hold students to.</td></tr>
+<tr><td style="padding:8px;border:1px solid #ccc;"><strong>Data Security</strong></td><td style="padding:8px;border:1px solid #ccc;">Never upload confidential research data (IRB-protected data, proprietary datasets, unpublished results from collaborators) to commercial AI platforms without understanding the data retention policies.</td></tr>
+</table>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appB_act4">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #E65100;">
+      <span class="card-icon">✏️</span>
+      <span class="card-title">Appendix B Deliverable: Paper Replication Report</span>
+      <span class="card-type" style="color:#E65100;">ASSIGNMENT</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<h3 style="color:#333;">The Assignment: Replicate One of Your Own Papers</h3>
+<p>Using the step-by-step process in this appendix, attempt to have Claude replicate one of your published papers. Submit a <strong>Paper Replication Report</strong> containing:</p>
+<ol>
+<li><strong>Paper Selection</strong> (1 paragraph): Which paper did you choose and why? What methodology does it use?</li>
+<li><strong>Literature Review Comparison</strong> (1 page): How did Claude's literature review compare to yours? Did it find your sources? Did it hallucinate any? Did it find anything you missed?</li>
+<li><strong>Methodology Replication Assessment</strong> (1 page): Did Claude correctly identify and implement your methodology? Where did it succeed and fail? If you provided data, did the results match?</li>
+<li><strong>Extension Evaluation</strong> (1 page): What extension did Claude propose? Was it meaningful? Would it survive peer review? Why or why not?</li>
+<li><strong>Honest Assessment</strong> (1 page): On a scale of 1–10, how well did Claude replicate your paper? What are the three most important things you learned about AI's research capabilities? How will this change how you use AI in your own research? How will it change how you advise students about AI in research?</li>
+</ol>
+<p><strong>Include:</strong> The actual prompts you used, key excerpts of Claude's output, and your annotated comparison. This is the evidence.</p>
+<div style="border-left:4px solid #2E7D32;background:#E8F5E9;padding:12px 16px;margin:12px 0;border-radius:4px;"><strong style="color:#2E7D32;">Tip</strong><br/>This assignment is designed to be genuinely illuminating for your own research practice, not just a course exercise. Many faculty who complete it discover specific ways to integrate AI into their research workflow — and specific places where they never will.</div>
+
+    </div>
+  </div>
+
+  <div class="content-card" id="appB_act5">
+    <div class="content-card-header" onclick="toggleCard(this)" style="border-left: 4px solid #6A1B9A;">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Appendix B Discussion: What Did Claude Get Right? What Did It Miss?</span>
+      <span class="card-type" style="color:#6A1B9A;">FORUM</span>
+      <span class="chevron">›</span>
+    </div>
+    <div class="content-card-body">
+      
+<p>Share a brief summary of your replication experiment: Which paper did you test? What was Claude's biggest success and biggest failure? On a scale of 1–10, how close did it get to replicating your work?</p>
+<p>Then discuss: Based on your experiment, where do you see AI fitting into the research workflow in your discipline within the next 2–3 years? What tasks will you delegate to AI? What will you never delegate? How should we be preparing doctoral students and junior faculty for this shift?</p>
+
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="newsletter-box" style="margin: 40px 32px 0; max-width: 900px;">
+  <h3>Stay in the loop.</h3>
+  <p>One email a month with new modules, new classroom-tested prompts, and platform changes that matter to faculty. No spam.</p>
+  <form onsubmit="handleFacultyNewsletter(event)">
+    <input type="email" placeholder="you@yourinstitution.edu" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
+<div class="site-footer">
+  Teaching with AI — Sellinger School of Business, Loyola University Maryland<br>
+  Dr. Jason Cherubini, DBA, CPA &bull; Executive-in-Residence / Assistant Teaching Professor of Finance<br>
+  Contact: <a href="mailto:jccherubini@loyola.edu">jccherubini@loyola.edu</a><br>
+  <span style="opacity:.7;">Built with care, powered by curiosity.</span>
+</div>
+
+<script>
+function showModule(id) {
+  // Hide all sections
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  // Show selected
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
+  // Update sidebar
+  document.querySelectorAll('.sidebar a').forEach(a => {
+    a.classList.toggle('active', a.dataset.mod === id);
+  });
+  // Update dropdown
+  document.getElementById('moduleJump').value = id;
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+function toggleCard(header) {
+  const card = header.closest('.content-card');
+  if (card) card.classList.toggle('open');
+}
+
+// TO ACTIVATE: Sign up free at https://formspree.io (use jccherubini@loyola.edu),
+// create a form (you can reuse the same form as the student site or make a
+// separate one to keep lists separate), copy the endpoint, paste below.
+const FACULTY_NEWSLETTER_ENDPOINT = "https://formspree.io/f/xnjoealr";
+
+async function handleFacultyNewsletter(e) {
+  e.preventDefault();
+  const form = e.target;
+  const input = form.querySelector('input[type="email"]');
+  const btn = form.querySelector('button');
+  const email = input.value.trim();
+  if (!email) return;
+
+  const originalText = btn.textContent;
+  btn.textContent = 'Subscribing…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(FACULTY_NEWSLETTER_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        source: 'teaching-with-ai-site',
+        page: window.location.hash || '#overview'
+      })
+    });
+    if (res.ok) {
+      btn.textContent = 'Subscribed ✓';
+      btn.style.background = '#8D6E63';
+      input.value = '';
+    } else {
+      btn.textContent = 'Try again';
+    }
+  } catch (err) {
+    btn.textContent = 'Network error';
+  }
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.style.background = '';
+    btn.disabled = false;
+  }, 3000);
+}
+
+// Handle hash-based navigation
+window.addEventListener('hashchange', () => {
+  const id = location.hash.slice(1);
+  if (id) showModule(id);
+});
+if (location.hash) {
+  const id = location.hash.slice(1);
+  if (document.getElementById(id)) showModule(id);
+}
+</script>
+</body>
+</html>
